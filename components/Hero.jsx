@@ -20,6 +20,14 @@ export default function Hero({ config = heroConfig }) {
       aria-label="Jovix Hero — Digital Solutions for Real Businesses"
       className="relative w-full bg-white select-none overflow-hidden"
     >
+      {/* Semantic H1 for Search Engine Crawlers & Accessibility */}
+      <div className="sr-only">
+        <h1>Jovix — Digital Solutions, Web Development & Business Management Systems</h1>
+        <p>
+          We design and develop modern websites, custom CRM, ERP, and business management systems that help businesses grow, attract customers, and automate operations.
+        </p>
+      </div>
+
       <div className="relative w-full max-w-[1920px] mx-auto">
         <div className="relative w-full">
           <Image
