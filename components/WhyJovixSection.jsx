@@ -2,7 +2,7 @@
 
 import React from "react";
 import Image from "next/image";
-import { Cpu, LifeBuoy, TrendingUp, Handshake, MapPin } from "lucide-react";
+import { Cpu, LifeBuoy, TrendingUp, Handshake } from "lucide-react";
 import { whyJovixConfig } from "@/config/landingContent";
 
 /**
@@ -50,29 +50,6 @@ export default function WhyJovixSection({ config = whyJovixConfig }) {
                 loading="lazy"
                 className="object-cover w-full h-full group-hover:scale-102 transition-transform duration-700 ease-out"
               />
-
-              {/* Floating Office Location Badge */}
-              {officeImage.mapUrl && (
-                <a
-                  href={officeImage.mapUrl}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  aria-label="View Jovix Office Location on Google Maps"
-                  className="absolute bottom-3 left-3 sm:bottom-5 sm:left-5 z-10 flex items-center gap-3 bg-white/95 backdrop-blur-md px-3.5 py-2.5 sm:px-4 sm:py-3 rounded-xl sm:rounded-2xl border border-slate-200/90 shadow-lg hover:shadow-xl hover:bg-white transition-all group/badge"
-                >
-                  <div className="w-9 h-9 sm:w-10 sm:h-10 rounded-lg sm:rounded-xl bg-blue-600 flex items-center justify-center text-white shrink-0 shadow-sm group-hover/badge:scale-105 transition-transform">
-                    <MapPin className="w-4 h-4 sm:w-5 sm:h-5 stroke-[2.5]" />
-                  </div>
-                  <div>
-                    <div className="text-xs sm:text-sm font-extrabold text-slate-900 group-hover/badge:text-blue-600 transition-colors">
-                      {officeImage.badgeTitle || "Our Office"}
-                    </div>
-                    <div className="text-[11px] sm:text-xs font-medium text-slate-500">
-                      {officeImage.location || "GITA Engineering College, Bhubaneswar, Odisha"}
-                    </div>
-                  </div>
-                </a>
-              )}
             </div>
           </div>
 
