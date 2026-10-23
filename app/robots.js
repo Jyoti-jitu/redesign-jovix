@@ -3,7 +3,7 @@
  * Next.js automatically maps this to /robots.txt
  */
 export default function robots() {
-  const baseUrl = "https://jovix.design";
+  const baseUrl = "https://jovix.co.uk";
 
   return {
     rules: [

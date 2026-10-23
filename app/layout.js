@@ -1,7 +1,7 @@
 import "./globals.css";
 
 export const metadata = {
-  metadataBase: new URL("https://jovix.design"),
+  metadataBase: new URL("https://jovix.co.uk"),
   title: {
     default: "Jovix — Digital Solutions, Business Management Systems & Web Development",
     template: "%s | Jovix",
@@ -86,7 +86,7 @@ export const metadata = {
     title: "Jovix — Digital Solutions, Business Management Systems & Web Development",
     description:
       "We design and build high-performance websites, custom CRM, ERP, clinic systems, workflow automation, and digital marketing to scale modern businesses.",
-    url: "https://jovix.design",
+    url: "https://jovix.co.uk",
     siteName: "Jovix",
     images: [
       {
@@ -121,17 +121,17 @@ const jsonLd = {
   "@graph": [
     {
       "@type": "Organization",
-      "@id": "https://jovix.design/#organization",
+      "@id": "https://jovix.co.uk/#organization",
       "name": "Jovix",
       "alternateName": ["Jovix Technologies", "Jovix Design Studio"],
-      "url": "https://jovix.design",
+      "url": "https://jovix.co.uk",
       "logo": {
         "@type": "ImageObject",
-        "url": "https://jovix.design/images/jovix-symbol.png",
+        "url": "https://jovix.co.uk/images/jovix-symbol.png",
         "width": "192",
         "height": "192",
       },
-      "image": "https://jovix.design/images/jovix-hero.png",
+      "image": "https://jovix.co.uk/images/jovix-hero.png",
       "description":
         "Jovix designs and develops high-performance websites, custom business management systems (CRM, ERP, HRM, Inventory, Clinic), automation, and digital marketing solutions.",
       "email": "hello@jovix.co.uk",
@@ -168,22 +168,22 @@ const jsonLd = {
     },
     {
       "@type": "WebSite",
-      "@id": "https://jovix.design/#website",
-      "url": "https://jovix.design",
+      "@id": "https://jovix.co.uk/#website",
+      "url": "https://jovix.co.uk",
       "name": "Jovix",
       "description":
         "Digital Solutions, Web Development & Business Management Systems",
       "publisher": {
-        "@id": "https://jovix.design/#organization",
+        "@id": "https://jovix.co.uk/#organization",
       },
       "inLanguage": "en-US",
     },
     {
       "@type": "ProfessionalService",
-      "@id": "https://jovix.design/#service",
+      "@id": "https://jovix.co.uk/#service",
       "name": "Jovix Digital Agency",
-      "url": "https://jovix.design",
-      "image": "https://jovix.design/images/jovix-hero.png",
+      "url": "https://jovix.co.uk",
+      "image": "https://jovix.co.uk/images/jovix-hero.png",
       "telephone": "+919090598756",
       "priceRange": "$$",
       "address": {
