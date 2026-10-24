@@ -53,77 +53,77 @@ export default function Contact() {
   };
 
   return (
-    <section id="contact" className="py-20 lg:py-28 bg-slate-50/70 border-b border-slate-100">
+    <section id="contact" className="py-10 sm:py-20 lg:py-28 bg-slate-50/70 border-b border-slate-100">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 lg:gap-16">
+        <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-16">
           {/* Left Info Column */}
           <div className="lg:col-span-5 flex flex-col justify-between">
             <div>
-              <div className="inline-flex items-center gap-2 text-xs font-bold uppercase tracking-wider text-blue-600 mb-3">
-                <span className="w-5 h-[2px] bg-blue-600" />
+              <div className="inline-flex items-center gap-2 text-[11px] sm:text-xs font-bold uppercase tracking-wider text-blue-600 mb-2 sm:mb-3">
+                <span className="w-4 sm:w-5 h-[2px] bg-blue-600" />
                 <span>Get In Touch</span>
               </div>
-              <h2 className="text-3xl sm:text-4xl font-extrabold text-slate-900 tracking-tight leading-tight">
-                Let's Build Something Exceptional Together
+              <h2 className="text-2xl sm:text-4xl font-extrabold text-slate-900 tracking-tight leading-tight">
+                Let&apos;s Build Something Exceptional Together
               </h2>
-              <p className="mt-4 text-base sm:text-lg text-slate-600 leading-relaxed">
-                Book your free 30-minute consultation. We'll audit your current site, discuss your goals, and map out a strategic timeline and scope.
+              <p className="mt-2.5 sm:mt-4 text-xs sm:text-base lg:text-lg text-slate-600 leading-relaxed">
+                Book your free 30-minute consultation. We&apos;ll audit your current site, discuss your goals, and map out a strategic timeline and scope.
               </p>
 
-              <div className="mt-8 space-y-5">
-                <div className="flex items-center gap-4">
-                  <div className="w-11 h-11 rounded-xl bg-blue-50 text-blue-600 flex items-center justify-center shrink-0">
-                    <Mail className="w-5 h-5" />
+              <div className="mt-6 sm:mt-8 space-y-3.5 sm:space-y-5">
+                <div className="flex items-center gap-3 sm:gap-4">
+                  <div className="w-9 h-9 sm:w-11 sm:h-11 rounded-lg sm:rounded-xl bg-blue-50 text-blue-600 flex items-center justify-center shrink-0">
+                    <Mail className="w-4 h-4 sm:w-5 sm:h-5" />
                   </div>
                   <div>
-                    <div className="text-xs font-semibold uppercase text-slate-500">Email Us</div>
+                    <div className="text-[10px] sm:text-xs font-semibold uppercase text-slate-500">Email Us</div>
                     <a
                       href="mailto:hello@jovix.co.uk"
-                      className="text-base font-semibold text-slate-900 hover:text-blue-600 transition-colors"
+                      className="text-sm sm:text-base font-semibold text-slate-900 hover:text-blue-600 transition-colors"
                     >
                       hello@jovix.co.uk
                     </a>
                   </div>
                 </div>
 
-                <div className="flex items-center gap-4">
-                  <div className="w-11 h-11 rounded-xl bg-blue-50 text-blue-600 flex items-center justify-center shrink-0">
-                    <Phone className="w-5 h-5" />
+                <div className="flex items-center gap-3 sm:gap-4">
+                  <div className="w-9 h-9 sm:w-11 sm:h-11 rounded-lg sm:rounded-xl bg-blue-50 text-blue-600 flex items-center justify-center shrink-0">
+                    <Phone className="w-4 h-4 sm:w-5 sm:h-5" />
                   </div>
                   <div>
-                    <div className="text-xs font-semibold uppercase text-slate-500">Call Us</div>
+                    <div className="text-[10px] sm:text-xs font-semibold uppercase text-slate-500">Call Us</div>
                     <a
                       href="tel:+919090598756"
-                      className="text-base font-semibold text-slate-900 hover:text-blue-600 transition-colors"
+                      className="text-sm sm:text-base font-semibold text-slate-900 hover:text-blue-600 transition-colors"
                     >
                       +91 90905 98756
                     </a>
                   </div>
                 </div>
 
-                <div className="flex items-center gap-4">
-                  <div className="w-11 h-11 rounded-xl bg-blue-50 text-blue-600 flex items-center justify-center shrink-0">
-                    <Clock className="w-5 h-5" />
+                <div className="flex items-center gap-3 sm:gap-4">
+                  <div className="w-9 h-9 sm:w-11 sm:h-11 rounded-lg sm:rounded-xl bg-blue-50 text-blue-600 flex items-center justify-center shrink-0">
+                    <Clock className="w-4 h-4 sm:w-5 sm:h-5" />
                   </div>
                   <div>
-                    <div className="text-xs font-semibold uppercase text-slate-500">Response Time</div>
-                    <div className="text-base font-semibold text-slate-900">
+                    <div className="text-[10px] sm:text-xs font-semibold uppercase text-slate-500">Response Time</div>
+                    <div className="text-sm sm:text-base font-semibold text-slate-900">
                       Within 24 business hours
                     </div>
                   </div>
                 </div>
 
-                <div className="flex items-center gap-4">
-                  <div className="w-11 h-11 rounded-xl bg-blue-50 text-blue-600 flex items-center justify-center shrink-0">
-                    <MapPin className="w-5 h-5" />
+                <div className="flex items-center gap-3 sm:gap-4">
+                  <div className="w-9 h-9 sm:w-11 sm:h-11 rounded-lg sm:rounded-xl bg-blue-50 text-blue-600 flex items-center justify-center shrink-0">
+                    <MapPin className="w-4 h-4 sm:w-5 sm:h-5" />
                   </div>
                   <div>
-                    <div className="text-xs font-semibold uppercase text-slate-500">Office Location</div>
+                    <div className="text-[10px] sm:text-xs font-semibold uppercase text-slate-500">Office Location</div>
                     <a
                       href="https://maps.app.goo.gl/P4ZzpERyaXUN5ytk7"
                       target="_blank"
                       rel="noopener noreferrer"
-                      className="text-base font-semibold text-slate-900 hover:text-blue-600 transition-colors"
+                      className="text-sm sm:text-base font-semibold text-slate-900 hover:text-blue-600 transition-colors"
                     >
                       GITA Engineering College, Bhubaneswar, Odisha
                     </a>
@@ -135,7 +135,7 @@ export default function Contact() {
 
           {/* Right Form Column */}
           <div className="lg:col-span-7">
-            <div className="bg-white p-6 sm:p-10 rounded-2xl border border-slate-200/80 shadow-md">
+            <div className="bg-white p-4 sm:p-10 rounded-2xl border border-slate-200/80 shadow-md">
               {formSubmitted ? (
                 <div className="py-12 text-center animate-in fade-in duration-300">
                   <div className="w-16 h-16 rounded-full bg-green-50 text-green-600 flex items-center justify-center mx-auto mb-4">
@@ -145,7 +145,7 @@ export default function Contact() {
                     Consultation Request Received!
                   </h3>
                   <p className="text-slate-600 max-w-md mx-auto mb-6 text-sm sm:text-base">
-                    Thank you, {formData.name || "there"}! We've received your project details and will review your requirements before reaching out within 24 hours.
+                    Thank you, {formData.name || "there"}! We&apos;ve received your project details and will review your requirements before reaching out within 24 hours.
                   </p>
                   <button
                     type="button"
@@ -178,8 +178,8 @@ export default function Contact() {
                     value="Jovix Website"
                   />
 
-                  <div className="flex items-center gap-3.5 mb-6 pb-5 border-b border-slate-100">
-                    <div className="w-11 h-11 rounded-xl bg-blue-50 border border-blue-100 p-1 flex items-center justify-center shrink-0 shadow-sm">
+                  <div className="flex items-center gap-3 mb-5 pb-4 border-b border-slate-100">
+                    <div className="w-9 h-9 sm:w-11 sm:h-11 rounded-xl bg-blue-50 border border-blue-100 p-1 flex items-center justify-center shrink-0 shadow-sm">
                       <Image
                         src="/images/jovix-symbol.png"
                         alt="Jovix Logo"
@@ -189,20 +189,20 @@ export default function Contact() {
                       />
                     </div>
                     <div>
-                      <h3 className="text-xl font-bold text-slate-900 leading-tight">
+                      <h3 className="text-base sm:text-xl font-bold text-slate-900 leading-tight">
                         Request a Free Consultation
                       </h3>
-                      <p className="text-xs sm:text-sm text-slate-500 mt-0.5">
+                      <p className="text-[11px] sm:text-sm text-slate-500 mt-0.5">
                         Tell us about your company and website objectives.
                       </p>
                     </div>
                   </div>
 
-                  <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                  <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 sm:gap-4">
                     <div>
                       <label
                         htmlFor="name"
-                        className="block text-xs font-semibold uppercase text-slate-700 mb-1.5"
+                        className="block text-[10px] sm:text-xs font-semibold uppercase text-slate-700 mb-1"
                       >
                         Full Name *
                       </label>
@@ -214,14 +214,14 @@ export default function Contact() {
                         value={formData.name}
                         onChange={handleChange}
                         placeholder="Sarah Jenkins"
-                        className="w-full px-4 py-3 rounded-lg border border-slate-300 focus:border-blue-500 focus:ring-2 focus:ring-blue-100 outline-none text-sm text-slate-900 transition-all"
+                        className="w-full px-3.5 py-2.5 sm:px-4 sm:py-3 rounded-lg border border-slate-300 focus:border-blue-500 focus:ring-2 focus:ring-blue-100 outline-none text-xs sm:text-sm text-slate-900 transition-all"
                       />
                     </div>
 
                     <div>
                       <label
                         htmlFor="email"
-                        className="block text-xs font-semibold uppercase text-slate-700 mb-1.5"
+                        className="block text-[10px] sm:text-xs font-semibold uppercase text-slate-700 mb-1"
                       >
                         Work Email *
                       </label>
@@ -233,16 +233,16 @@ export default function Contact() {
                         value={formData.email}
                         onChange={handleChange}
                         placeholder="sarah@yourcompany.com"
-                        className="w-full px-4 py-3 rounded-lg border border-slate-300 focus:border-blue-500 focus:ring-2 focus:ring-blue-100 outline-none text-sm text-slate-900 transition-all"
+                        className="w-full px-3.5 py-2.5 sm:px-4 sm:py-3 rounded-lg border border-slate-300 focus:border-blue-500 focus:ring-2 focus:ring-blue-100 outline-none text-xs sm:text-sm text-slate-900 transition-all"
                       />
                     </div>
                   </div>
 
-                  <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                  <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 sm:gap-4">
                     <div>
                       <label
                         htmlFor="phone"
-                        className="block text-xs font-semibold uppercase text-slate-700 mb-1.5"
+                        className="block text-[10px] sm:text-xs font-semibold uppercase text-slate-700 mb-1"
                       >
                         Mobile No. *
                       </label>
@@ -254,14 +254,14 @@ export default function Contact() {
                         value={formData.phone}
                         onChange={handleChange}
                         placeholder="+91 98765 43210"
-                        className="w-full px-4 py-3 rounded-lg border border-slate-300 focus:border-blue-500 focus:ring-2 focus:ring-blue-100 outline-none text-sm text-slate-900 transition-all"
+                        className="w-full px-3.5 py-2.5 sm:px-4 sm:py-3 rounded-lg border border-slate-300 focus:border-blue-500 focus:ring-2 focus:ring-blue-100 outline-none text-xs sm:text-sm text-slate-900 transition-all"
                       />
                     </div>
 
                     <div>
                       <label
                         htmlFor="service"
-                        className="block text-xs font-semibold uppercase text-slate-700 mb-1.5"
+                        className="block text-[10px] sm:text-xs font-semibold uppercase text-slate-700 mb-1"
                       >
                         Service Needed
                       </label>
@@ -270,7 +270,7 @@ export default function Contact() {
                         name="service"
                         value={formData.service}
                         onChange={handleChange}
-                        className="w-full px-4 py-3 rounded-lg border border-slate-300 focus:border-blue-500 focus:ring-2 focus:ring-blue-100 outline-none text-sm text-slate-900 transition-all bg-white"
+                        className="w-full px-3.5 py-2.5 sm:px-4 sm:py-3 rounded-lg border border-slate-300 focus:border-blue-500 focus:ring-2 focus:ring-blue-100 outline-none text-xs sm:text-sm text-slate-900 transition-all bg-white"
                       >
                         <option value="Full Website Redesign">Full Website Redesign</option>
                         <option value="Business Management Systems (CRM/ERP/HRM)">Business Management Systems</option>
@@ -285,7 +285,7 @@ export default function Contact() {
                   <div>
                     <label
                       htmlFor="message"
-                      className="block text-xs font-semibold uppercase text-slate-700 mb-1.5"
+                      className="block text-[10px] sm:text-xs font-semibold uppercase text-slate-700 mb-1"
                     >
                       Project Goals & Details *
                     </label>
@@ -293,18 +293,18 @@ export default function Contact() {
                       id="message"
                       name="message"
                       required
-                      rows={4}
+                      rows={3}
                       value={formData.message}
                       onChange={handleChange}
                       placeholder="Briefly describe what challenges your current site faces and what success looks like..."
-                      className="w-full px-4 py-3 rounded-lg border border-slate-300 focus:border-blue-500 focus:ring-2 focus:ring-blue-100 outline-none text-sm text-slate-900 transition-all"
+                      className="w-full px-3.5 py-2.5 sm:px-4 sm:py-3 rounded-lg border border-slate-300 focus:border-blue-500 focus:ring-2 focus:ring-blue-100 outline-none text-xs sm:text-sm text-slate-900 transition-all"
                     />
                   </div>
 
                   <button
                     type="submit"
                     disabled={isSubmitting}
-                    className="w-full inline-flex items-center justify-center gap-2 py-4 px-6 rounded-lg text-white font-semibold bg-blue-600 hover:bg-blue-700 active:scale-[0.99] transition-all shadow-md hover:shadow-lg focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-blue-500 cursor-pointer disabled:opacity-75 disabled:cursor-not-allowed"
+                    className="w-full inline-flex items-center justify-center gap-2 py-3 sm:py-4 px-6 rounded-lg text-white font-semibold text-xs sm:text-base bg-blue-600 hover:bg-blue-700 active:scale-[0.99] transition-all shadow-md hover:shadow-lg focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-blue-500 cursor-pointer disabled:opacity-75 disabled:cursor-not-allowed"
                   >
                     {isSubmitting ? (
                       <>
@@ -314,7 +314,7 @@ export default function Contact() {
                     ) : (
                       <>
                         <span>Submit Consultation Request</span>
-                        <Send className="w-4 h-4" />
+                        <Send className="w-3.5 h-3.5 sm:w-4 sm:h-4" />
                       </>
                     )}
                   </button>

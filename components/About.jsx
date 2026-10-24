@@ -31,33 +31,33 @@ const VALUES = [
 
 export default function About() {
   return (
-    <section id="about" className="py-20 lg:py-28 bg-white border-b border-slate-100">
+    <section id="about" className="py-10 sm:py-20 lg:py-28 bg-white border-b border-slate-100">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 lg:gap-16 items-center">
+        <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-16 items-center">
           {/* Left Column: Narrative */}
           <div className="lg:col-span-7">
-            <div className="inline-flex items-center gap-2 text-xs font-bold uppercase tracking-wider text-blue-600 mb-3">
-              <span className="w-5 h-[2px] bg-blue-600" />
+            <div className="inline-flex items-center gap-2 text-[11px] sm:text-xs font-bold uppercase tracking-wider text-blue-600 mb-2 sm:mb-3">
+              <span className="w-4 sm:w-5 h-[2px] bg-blue-600" />
               <span>About Jovix</span>
             </div>
-            <h2 className="text-3xl sm:text-4xl font-extrabold text-slate-900 tracking-tight leading-tight">
+            <h2 className="text-2xl sm:text-4xl font-extrabold text-slate-900 tracking-tight leading-tight">
               We Craft High-Impact Websites for Ambitious Businesses
             </h2>
-            <p className="mt-5 text-lg text-slate-600 leading-relaxed">
-              Jovix was founded with a straightforward conviction: great businesses deserve websites that match the quality of their services. We combine aesthetic precision with engineering discipline to turn your website into your company's most reliable revenue driver.
+            <p className="mt-3 sm:mt-5 text-xs sm:text-base lg:text-lg text-slate-600 leading-relaxed">
+              Jovix was founded with a straightforward conviction: great businesses deserve websites that match the quality of their services. We combine aesthetic precision with engineering discipline to turn your website into your company&apos;s most reliable revenue driver.
             </p>
 
-            <div className="mt-8 space-y-4">
+            <div className="mt-6 sm:mt-8 space-y-3 sm:space-y-4">
               {VALUES.map((val, idx) => {
                 const Icon = val.icon;
                 return (
-                  <div key={idx} className="flex items-start gap-4 p-4 rounded-xl bg-slate-50 border border-slate-100">
-                    <div className="p-2 bg-blue-100 text-blue-600 rounded-lg shrink-0">
-                      <Icon className="w-5 h-5" />
+                  <div key={idx} className="flex items-start gap-3 sm:gap-4 p-3 sm:p-4 rounded-xl bg-slate-50 border border-slate-100">
+                    <div className="p-1.5 sm:p-2 bg-blue-100 text-blue-600 rounded-lg shrink-0">
+                      <Icon className="w-4 h-4 sm:w-5 sm:h-5" />
                     </div>
                     <div>
-                      <h4 className="text-base font-bold text-slate-900">{val.title}</h4>
-                      <p className="text-sm text-slate-600 mt-1">{val.description}</p>
+                      <h4 className="text-xs sm:text-base font-bold text-slate-900">{val.title}</h4>
+                      <p className="text-[11px] sm:text-sm text-slate-600 mt-0.5 sm:mt-1">{val.description}</p>
                     </div>
                   </div>
                 );
@@ -67,17 +67,17 @@ export default function About() {
 
           {/* Right Column: Stats Cards */}
           <div className="lg:col-span-5">
-            <div className="grid grid-cols-2 gap-4 sm:gap-6">
+            <div className="grid grid-cols-2 gap-3 sm:gap-6">
               {STATS.map((stat, sIdx) => (
                 <div
                   key={sIdx}
-                  className="p-6 bg-slate-50 rounded-2xl border border-slate-200/80 text-center flex flex-col justify-center hover:border-blue-300 hover:bg-white hover:shadow-lg transition-all"
+                  className="p-3.5 sm:p-6 bg-slate-50 rounded-xl sm:rounded-2xl border border-slate-200/80 text-center flex flex-col justify-center hover:border-blue-300 hover:bg-white hover:shadow-lg transition-all"
                 >
-                  <div className="text-3xl sm:text-4xl font-black text-blue-600 mb-1">
+                  <div className="text-2xl sm:text-4xl font-black text-blue-600 mb-0.5 sm:mb-1">
                     {stat.value}
                   </div>
-                  <div className="text-sm font-bold text-slate-900">{stat.label}</div>
-                  <div className="text-xs text-slate-500 mt-1">{stat.detail}</div>
+                  <div className="text-xs sm:text-sm font-bold text-slate-900">{stat.label}</div>
+                  <div className="text-[10px] sm:text-xs text-slate-500 mt-0.5 sm:mt-1">{stat.detail}</div>
                 </div>
               ))}
             </div>

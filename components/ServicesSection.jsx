@@ -16,39 +16,39 @@ export default function ServicesSection({ config = servicesConfig }) {
     <section
       id="services"
       aria-label="Our Services and Capabilities"
-      className="w-full bg-white py-16 sm:py-20 lg:py-24 border-b border-slate-200/80"
+      className="w-full bg-white py-10 sm:py-20 lg:py-24 border-b border-slate-200/80"
     >
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         {/* Header Layout: 2-column on desktop, stacked on mobile */}
-        <div className="flex flex-col lg:flex-row lg:items-end lg:justify-between gap-6 mb-12 sm:mb-14">
+        <div className="flex flex-col lg:flex-row lg:items-end lg:justify-between gap-4 sm:gap-6 mb-8 sm:mb-14">
           {/* Left Column: Badge + Main Heading */}
           <div className="max-w-xl">
-            <span className="text-xs sm:text-sm font-extrabold uppercase tracking-widest text-slate-500 mb-2.5 block">
+            <span className="text-[11px] sm:text-sm font-extrabold uppercase tracking-widest text-slate-500 mb-1.5 sm:mb-2.5 block">
               {badge}
             </span>
-            <h2 className="text-3xl sm:text-4xl lg:text-5xl font-black text-slate-950 tracking-tight leading-tight">
+            <h2 className="text-2xl sm:text-4xl lg:text-5xl font-black text-slate-950 tracking-tight leading-tight">
               {titlePart1} <br className="hidden sm:inline" />
               <span className="text-blue-600">{titleHighlight}</span>
             </h2>
           </div>
 
           {/* Right Column: Description + View All Services Link */}
-          <div className="max-w-md lg:text-left flex flex-col items-start gap-4">
-            <p className="text-sm sm:text-base font-medium text-slate-700 leading-relaxed">
+          <div className="max-w-md lg:text-left flex flex-col items-start gap-3 sm:gap-4">
+            <p className="text-xs sm:text-base font-medium text-slate-700 leading-relaxed">
               {description}
             </p>
             <a
               href={viewAllLink.href}
-              className="inline-flex items-center gap-1.5 text-sm sm:text-base font-bold text-blue-600 hover:text-blue-700 transition-colors group"
+              className="inline-flex items-center gap-1.5 text-xs sm:text-base font-bold text-blue-600 hover:text-blue-700 transition-colors group"
             >
               <span>{viewAllLink.label}</span>
-              <ArrowRight className="w-4 h-4 stroke-[2.5] transition-transform duration-200 group-hover:translate-x-1" />
+              <ArrowRight className="w-3.5 h-3.5 sm:w-4 sm:h-4 stroke-[2.5] transition-transform duration-200 group-hover:translate-x-1" />
             </a>
           </div>
         </div>
 
         {/* 4 Service Cards Grid: 1 col on mobile, 2 cols on tablet, 4 cols on desktop */}
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 lg:gap-6">
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 sm:gap-6">
           {services.map((service) => (
             <ServiceCard key={service.id} service={service} />
           ))}

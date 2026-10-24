@@ -2,6 +2,7 @@
 
 import React from "react";
 import Image from "next/image";
+import Link from "next/link";
 import { ArrowUp } from "lucide-react";
 
 export default function Footer() {
@@ -10,9 +11,9 @@ export default function Footer() {
   };
 
   return (
-    <footer className="bg-slate-950 text-slate-400 py-16 border-t border-slate-900">
+    <footer className="bg-slate-950 text-slate-400 py-10 sm:py-16 border-t border-slate-900">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="grid grid-cols-1 md:grid-cols-12 gap-10 pb-12 border-b border-slate-800/80">
+        <div className="grid grid-cols-1 md:grid-cols-12 gap-8 sm:gap-10 pb-8 sm:pb-12 border-b border-slate-800/80">
           {/* Brand info */}
           <div className="md:col-span-5">
             <a
@@ -21,9 +22,9 @@ export default function Footer() {
                 e.preventDefault();
                 scrollToTop();
               }}
-              className="inline-flex items-center gap-3 text-2xl font-black tracking-tight text-white mb-4 group"
+              className="inline-flex items-center gap-2.5 sm:gap-3 text-xl sm:text-2xl font-black tracking-tight text-white mb-3 sm:mb-4 group"
             >
-              <div className="relative w-10 h-10 rounded-xl overflow-hidden shrink-0 bg-white p-0.5 shadow-sm border border-slate-800 flex items-center justify-center group-hover:scale-105 transition-transform">
+              <div className="relative w-8 h-8 sm:w-10 sm:h-10 rounded-xl overflow-hidden shrink-0 bg-white p-0.5 shadow-sm border border-slate-800 flex items-center justify-center group-hover:scale-105 transition-transform">
                 <Image
                   src="/images/jovix-symbol.png"
                   alt="Jovix Logo"
@@ -34,15 +35,15 @@ export default function Footer() {
               </div>
               <div className="flex flex-col">
                 <div className="flex items-center gap-1.5">
-                  <span className="text-2xl font-black tracking-tight text-white">JOVIX</span>
+                  <span className="text-xl sm:text-2xl font-black tracking-tight text-white">JOVIX</span>
                   <span className="w-1.5 h-1.5 rounded-full bg-blue-500" />
                 </div>
-                <span className="text-[10px] uppercase tracking-wider text-blue-400 font-semibold">
+                <span className="text-[9px] sm:text-[10px] uppercase tracking-wider text-blue-400 font-semibold">
                   Technology for a Brighter Tomorrow
                 </span>
               </div>
             </a>
-            <p className="text-sm text-slate-400 max-w-sm leading-relaxed mb-6">
+            <p className="text-xs sm:text-sm text-slate-400 max-w-sm leading-relaxed mb-4 sm:mb-6">
               Digital solutions for real businesses. We engineer high-converting, modern websites that help brands scale and dominate their category.
             </p>
             <div className="flex items-center gap-3">
@@ -96,24 +97,39 @@ export default function Footer() {
             </h4>
             <ul className="space-y-2.5 text-sm">
               <li>
-                <a href="#hero" className="hover:text-white transition-colors">
+                <Link href="/" className="hover:text-white transition-colors">
                   Home
-                </a>
+                </Link>
               </li>
               <li>
-                <a href="#services" className="hover:text-white transition-colors">
+                <Link href="/services" className="hover:text-white transition-colors">
                   Services
-                </a>
+                </Link>
               </li>
               <li>
-                <a href="#work" className="hover:text-white transition-colors">
-                  Selected Work
-                </a>
+                <Link href="/services#delivered-projects" className="hover:text-white transition-colors">
+                  Delivered Projects
+                </Link>
               </li>
               <li>
-                <a href="#about" className="hover:text-white transition-colors">
+                <Link href="/demo-projects" className="hover:text-white transition-colors">
+                  Demo Projects
+                </Link>
+              </li>
+              <li>
+                <Link href="/announcements" className="hover:text-white transition-colors">
+                  Announcements & News
+                </Link>
+              </li>
+              <li>
+                <Link href="/announcements?tab=gallery" className="hover:text-white transition-colors">
+                  Media Gallery
+                </Link>
+              </li>
+              <li>
+                <Link href="/#about" className="hover:text-white transition-colors">
                   About Jovix
-                </a>
+                </Link>
               </li>
               <li>
                 <a href="#contact" className="hover:text-white transition-colors">

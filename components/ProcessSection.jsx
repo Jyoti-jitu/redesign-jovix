@@ -26,17 +26,17 @@ export default function ProcessSection({ config = processConfig }) {
     <section
       id="process"
       aria-label="Our Development Process"
-      className="w-full bg-white py-16 sm:py-20 lg:py-24 border-b border-slate-200/80"
+      className="w-full bg-white py-10 sm:py-20 lg:py-24 border-b border-slate-200/80"
     >
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         {/* Soft Blue-Gray Enclosing Card matching reference */}
-        <div className="bg-[#f8faff] rounded-3xl p-8 sm:p-12 lg:p-16 border border-slate-100/80 shadow-xs">
+        <div className="bg-[#f8faff] rounded-2xl sm:rounded-3xl p-5 sm:p-12 lg:p-16 border border-slate-100/80 shadow-xs">
           {/* Header */}
-          <div className="max-w-2xl mb-12 sm:mb-16">
-            <span className="text-xs sm:text-sm font-extrabold uppercase tracking-widest text-blue-600 mb-2.5 block">
+          <div className="max-w-2xl mb-8 sm:mb-16">
+            <span className="text-[11px] sm:text-sm font-extrabold uppercase tracking-widest text-blue-600 mb-1.5 sm:mb-2.5 block">
               {badge}
             </span>
-            <h2 className="text-3xl sm:text-4xl lg:text-5xl font-black text-slate-950 tracking-tight leading-tight">
+            <h2 className="text-2xl sm:text-4xl lg:text-5xl font-black text-slate-950 tracking-tight leading-tight">
               {titlePart1} <span className="text-blue-600">{titleHighlight}</span>
             </h2>
           </div>
@@ -80,30 +80,30 @@ export default function ProcessSection({ config = processConfig }) {
           </div>
 
           {/* Mobile View: Vertical Connected Timeline */}
-          <div className="flex flex-col md:hidden space-y-8 relative">
+          <div className="flex flex-col md:hidden space-y-6 relative">
             {steps.map((item, idx) => {
               const IconComponent = PROCESS_ICONS[item.icon] || Lightbulb;
               const isLast = idx === steps.length - 1;
 
               return (
-                <div key={item.step} className="flex gap-4 relative">
+                <div key={item.step} className="flex gap-3.5 relative">
                   {/* Left Column: Icon Circle & Vertical Line */}
                   <div className="flex flex-col items-center">
-                    <div className="w-12 h-12 rounded-full bg-blue-50 text-blue-600 border border-blue-100 flex items-center justify-center shrink-0 shadow-xs">
-                      <IconComponent className="w-5 h-5 stroke-[2]" />
+                    <div className="w-9 h-9 rounded-full bg-blue-50 text-blue-600 border border-blue-100 flex items-center justify-center shrink-0 shadow-xs">
+                      <IconComponent className="w-4 h-4 stroke-[2]" />
                     </div>
                     {!isLast && (
-                      <div className="w-[2px] bg-slate-200 flex-1 my-2" />
+                      <div className="w-[2px] bg-slate-200 flex-1 my-1.5" />
                     )}
                   </div>
 
                   {/* Right Column: Number, Title & Description */}
-                  <div className="pb-4">
+                  <div className="pb-3">
                     <div className="flex items-center gap-2 mb-1">
-                      <span className="text-sm font-black text-blue-600">
+                      <span className="text-xs font-black text-blue-600">
                         {item.step}
                       </span>
-                      <h3 className="text-base font-extrabold text-slate-950 tracking-tight">
+                      <h3 className="text-sm font-extrabold text-slate-950 tracking-tight">
                         {item.title}
                       </h3>
                     </div>
