@@ -1,8 +1,18 @@
 "use client";
 
-import React from "react";
+import React, { useState, useEffect, useRef } from "react";
 import Image from "next/image";
-import { Monitor, Layers, Settings, ChartNoAxesColumnIncreasing, CheckCircle2, ArrowRight, Zap, Code2 } from "lucide-react";
+import {
+  Monitor,
+  Layers,
+  Settings,
+  ChartNoAxesColumnIncreasing,
+  CheckCircle2,
+  ArrowRight,
+  Zap,
+  Code2,
+  X,
+} from "lucide-react";
 import { detailedServicesList } from "@/config/servicesContent";
 
 const ICON_MAP = {
@@ -12,9 +22,65 @@ const ICON_MAP = {
   ChartNoAxesColumnIncreasing: ChartNoAxesColumnIncreasing,
 };
 
+function getShortServiceName(title) {
+  if (!title) return "";
+  if (title.includes("Customized Software")) return "Custom Software & ERP";
+  if (title.includes("Website")) return "Website Development";
+  if (title.includes("Automation")) return "AI & Automation";
+  if (title.includes("Marketing")) return "Digital Marketing & SEO";
+  return title.split(" — ")[0].split("&")[0].trim();
+}
+
 export default function ServicesList() {
+  const [activeServiceModal, setActiveServiceModal] = useState(null);
+  const [isCatalogVisible, setIsCatalogVisible] = useState(false);
+  const cardsGridRef = useRef(null);
+
+  useEffect(() => {
+    const el = cardsGridRef.current;
+    if (!el) return;
+
+    const observer = new IntersectionObserver(
+      (entries) => {
+        const entry = entries[0];
+        if (entry.isIntersecting) {
+          setIsCatalogVisible(true);
+        } else {
+          setIsCatalogVisible(false);
+        }
+      },
+      {
+        threshold: 0.1,
+        rootMargin: "0px 0px -40px 0px",
+      }
+    );
+
+    observer.observe(el);
+    return () => observer.disconnect();
+  }, []);
+
+  // Lock body scroll when modal is open
+  useEffect(() => {
+    if (activeServiceModal) {
+      document.body.style.overflow = "hidden";
+      const handleKeyDown = (e) => {
+        if (e.key === "Escape") {
+          setActiveServiceModal(null);
+        }
+      };
+      window.addEventListener("keydown", handleKeyDown);
+      return () => {
+        document.body.style.overflow = "";
+        window.removeEventListener("keydown", handleKeyDown);
+      };
+    } else {
+      document.body.style.overflow = "";
+    }
+  }, [activeServiceModal]);
+
   const scrollToContact = (e, serviceTitle) => {
-    e.preventDefault();
+    if (e) e.preventDefault();
+    setActiveServiceModal(null);
     const contactEl = document.querySelector("#contact");
     if (contactEl) {
       contactEl.scrollIntoView({ behavior: "smooth", block: "start" });
@@ -22,8 +88,11 @@ export default function ServicesList() {
   };
 
   const scrollToDeliveredProject = (e, projectId) => {
-    e.preventDefault();
-    const projectEl = document.querySelector(`#project-${projectId}`) || document.querySelector("#delivered-projects");
+    if (e) e.preventDefault();
+    setActiveServiceModal(null);
+    const projectEl =
+      document.querySelector(`#project-${projectId}`) ||
+      document.querySelector("#delivered-projects");
     if (projectEl) {
       projectEl.scrollIntoView({ behavior: "smooth", block: "start" });
     }
@@ -45,46 +114,60 @@ export default function ServicesList() {
           </p>
         </div>
 
-        {/* 4 In-Depth Service Cards */}
-        <div className="grid grid-cols-1 lg:grid-cols-2 gap-5 sm:gap-8 lg:gap-10">
-          {detailedServicesList.map((service) => {
+        {/* 4 In-Depth Service Cards: 2x2 grid on mobile (< sm), 2 cols on desktop */}
+        <div
+          ref={cardsGridRef}
+          className="grid grid-cols-2 lg:grid-cols-2 gap-2.5 sm:gap-8 lg:gap-10"
+        >
+          {detailedServicesList.map((service, index) => {
             const Icon = ICON_MAP[service.icon] || Monitor;
 
             return (
               <div
                 key={service.id}
                 id={service.id}
-                className="group relative flex flex-col justify-between bg-white rounded-2xl sm:rounded-3xl border border-slate-200/90 shadow-xs hover:shadow-xl hover:border-blue-200 transition-all duration-300 p-4 sm:p-8 lg:p-10"
+                onClick={() => setActiveServiceModal(service)}
+                className={`group relative flex flex-col justify-between bg-white rounded-xl sm:rounded-3xl border border-slate-200/90 shadow-xs hover:shadow-xl hover:border-blue-200 transform transition-all duration-1000 ease-out p-2.5 sm:p-8 lg:p-10 cursor-pointer ${
+                  isCatalogVisible
+                    ? "opacity-100 translate-y-0 scale-100"
+                    : "opacity-0 translate-y-20 scale-[0.96]"
+                }`}
+                style={{
+                  transitionDelay: isCatalogVisible ? `${index * 160}ms` : "0ms",
+                }}
               >
                 <div>
                   {/* Top Header Row */}
-                  <div className="flex items-center justify-between gap-4 mb-4 sm:mb-6">
-                    <div className="flex items-center gap-2.5 sm:gap-3">
-                      <div className="w-10 h-10 sm:w-12 sm:h-12 rounded-xl sm:rounded-2xl bg-blue-50 border border-blue-100 text-blue-600 flex items-center justify-center shrink-0 group-hover:bg-blue-600 group-hover:text-white transition-colors duration-200 shadow-xs">
-                        <Icon className="w-5 h-5 sm:w-6 sm:h-6 stroke-[2.2]" />
+                  <div className="flex items-center justify-between gap-2 sm:gap-4 mb-2 sm:mb-6">
+                    <div className="flex items-center gap-1.5 sm:gap-3">
+                      <div className="w-7 h-7 sm:w-12 sm:h-12 rounded-lg sm:rounded-2xl bg-blue-50 border border-blue-100 text-blue-600 flex items-center justify-center shrink-0 group-hover:bg-blue-600 group-hover:text-white transition-colors duration-200 shadow-xs">
+                        <Icon className="w-3.5 h-3.5 sm:w-6 sm:h-6 stroke-[2.2]" />
                       </div>
-                      <span className="text-[10px] sm:text-xs font-bold uppercase tracking-wider px-2.5 py-0.5 sm:px-3 sm:py-1 bg-slate-100 text-slate-700 rounded-full border border-slate-200/60">
+                      <span className="hidden sm:inline-block text-[10px] sm:text-xs font-bold uppercase tracking-wider px-2.5 py-0.5 sm:px-3 sm:py-1 bg-slate-100 text-slate-700 rounded-full border border-slate-200/60">
                         {service.badge}
                       </span>
                     </div>
-                    <span className="text-xl sm:text-2xl font-black text-slate-300 font-mono">
+                    <span className="text-xs sm:text-2xl font-black text-slate-300 font-mono">
                       {service.number}
                     </span>
                   </div>
 
                   {/* Service Title & Tagline */}
-                  <h3 className="text-lg sm:text-2xl lg:text-3xl font-extrabold text-slate-950 tracking-tight mb-1.5 sm:mb-2.5 group-hover:text-blue-600 transition-colors">
-                    {service.title}
+                  <h3 className="text-xs sm:text-2xl lg:text-3xl font-extrabold text-slate-950 tracking-tight mb-0.5 sm:mb-2.5 group-hover:text-blue-600 transition-colors">
+                    <span className="sm:hidden line-clamp-1">{getShortServiceName(service.title)}</span>
+                    <span className="hidden sm:inline line-clamp-2">{service.title}</span>
                   </h3>
-                  <p className="text-xs sm:text-base font-semibold text-blue-600 leading-snug mb-2.5 sm:mb-4">
+                  <p className="hidden sm:block text-xs sm:text-base font-semibold text-blue-600 leading-tight truncate sm:leading-snug mb-1 sm:mb-4">
                     {service.tagline}
                   </p>
-                  <p className="text-xs sm:text-base text-slate-600 leading-relaxed font-normal mb-4 sm:mb-6">
+
+                  {/* Description - Desktop only */}
+                  <p className="hidden sm:block text-xs sm:text-base text-slate-600 leading-relaxed font-normal mb-4 sm:mb-6">
                     {service.description}
                   </p>
 
-                  {/* Key Deliverables List */}
-                  <div className="mb-4 sm:mb-6 pt-3.5 sm:pt-5 border-t border-slate-100">
+                  {/* Key Deliverables List - Desktop only */}
+                  <div className="hidden sm:block mb-4 sm:mb-6 pt-3.5 sm:pt-5 border-t border-slate-100">
                     <h4 className="text-[10px] sm:text-xs font-bold uppercase tracking-wider text-slate-900 mb-2 sm:mb-3.5">
                       Key Deliverables &amp; Capabilities:
                     </h4>
@@ -98,8 +181,8 @@ export default function ServicesList() {
                     </ul>
                   </div>
 
-                  {/* Tech Stack Chips */}
-                  <div className="mb-6">
+                  {/* Tech Stack Chips - Desktop only */}
+                  <div className="hidden sm:block mb-6">
                     <h4 className="text-xs font-bold uppercase tracking-wider text-slate-900 mb-2.5">
                       Technologies & Tools:
                     </h4>
@@ -114,10 +197,16 @@ export default function ServicesList() {
                       ))}
                     </div>
                   </div>
+
+                  {/* Mobile Tap Indicator */}
+                  <div className="sm:hidden pt-1.5 mt-1 border-t border-slate-100 flex items-center justify-between text-[10px] font-bold text-blue-600">
+                    <span>View Details</span>
+                    <ArrowRight className="w-3 h-3 group-hover:translate-x-0.5 transition-transform" />
+                  </div>
                 </div>
 
-                {/* Bottom Card Footer */}
-                <div className="pt-6 border-t border-slate-100 flex flex-col sm:flex-row sm:items-center justify-between gap-4 mt-2">
+                {/* Bottom Card Footer - Desktop only */}
+                <div className="hidden sm:flex pt-6 border-t border-slate-100 flex-col sm:flex-row sm:items-center justify-between gap-4 mt-2">
                   <div className="inline-flex items-center gap-1.5 text-xs font-semibold text-slate-500">
                     <Zap className="w-3.5 h-3.5 text-amber-500 shrink-0" />
                     <span>{service.resultsMetric}</span>
@@ -126,7 +215,10 @@ export default function ServicesList() {
                   <div className="flex items-center gap-3">
                     <button
                       type="button"
-                      onClick={(e) => scrollToDeliveredProject(e, service.featuredDeliveredProject)}
+                      onClick={(e) => {
+                        e.stopPropagation();
+                        scrollToDeliveredProject(e, service.featuredDeliveredProject);
+                      }}
                       className="inline-flex items-center gap-1 text-xs sm:text-sm font-bold text-blue-600 hover:text-blue-700 transition-colors cursor-pointer"
                     >
                       <span>View Delivered Work</span>
@@ -135,7 +227,10 @@ export default function ServicesList() {
 
                     <button
                       type="button"
-                      onClick={(e) => scrollToContact(e, service.title)}
+                      onClick={(e) => {
+                        e.stopPropagation();
+                        scrollToContact(e, service.title);
+                      }}
                       className="inline-flex items-center gap-1 px-3.5 py-2 rounded-lg bg-slate-900 hover:bg-blue-600 text-white text-xs sm:text-sm font-semibold transition-all shadow-xs cursor-pointer"
                     >
                       <span>Inquire</span>
@@ -146,6 +241,122 @@ export default function ServicesList() {
             );
           })}
         </div>
+
+        {/* Modal: Full Service Details when card is clicked */}
+        {activeServiceModal && (
+          <div
+            className="fixed inset-0 z-50 bg-slate-950/60 backdrop-blur-xs flex items-center justify-center p-3 sm:p-6 animate-in fade-in duration-200"
+            onClick={() => setActiveServiceModal(null)}
+            role="dialog"
+            aria-modal="true"
+          >
+            <div
+              className="relative w-full max-w-lg max-h-[88vh] overflow-y-auto bg-white rounded-2xl sm:rounded-3xl shadow-2xl border border-slate-200 p-4 sm:p-6 text-left"
+              onClick={(e) => e.stopPropagation()}
+            >
+              {/* Close Button */}
+              <button
+                type="button"
+                onClick={() => setActiveServiceModal(null)}
+                aria-label="Close dialog"
+                className="absolute top-3 right-3 sm:top-4 sm:right-4 w-8 h-8 rounded-full bg-slate-100 hover:bg-slate-200 text-slate-600 hover:text-slate-900 flex items-center justify-center transition-colors z-20 cursor-pointer"
+              >
+                <X className="w-4 h-4 stroke-[2.5]" />
+              </button>
+
+              {/* Service Header */}
+              <div className="flex items-center gap-3 mb-3">
+                {(() => {
+                  const ModalIcon = ICON_MAP[activeServiceModal.icon] || Monitor;
+                  return (
+                    <div className="w-10 h-10 rounded-xl bg-blue-50 border border-blue-100 text-blue-600 flex items-center justify-center shrink-0">
+                      <ModalIcon className="w-5 h-5 stroke-[2.2]" />
+                    </div>
+                  );
+                })()}
+                <div>
+                  <span className="text-[10px] font-bold uppercase tracking-wider px-2 py-0.5 bg-slate-100 text-slate-700 rounded-full">
+                    {activeServiceModal.badge}
+                  </span>
+                  <div className="text-xs text-slate-400 font-mono font-bold mt-0.5">
+                    Service {activeServiceModal.number}
+                  </div>
+                </div>
+              </div>
+
+              {/* Title & Tagline */}
+              <h3 className="text-lg sm:text-2xl font-black text-slate-950 tracking-tight leading-snug">
+                {activeServiceModal.title}
+              </h3>
+              <p className="text-xs sm:text-sm font-semibold text-blue-600 mt-0.5 mb-3">
+                {activeServiceModal.tagline}
+              </p>
+
+              {/* Description */}
+              <p className="text-xs sm:text-sm text-slate-600 leading-relaxed font-normal mb-4">
+                {activeServiceModal.description}
+              </p>
+
+              {/* Deliverables */}
+              <div className="mb-4 pt-3 border-t border-slate-100">
+                <h4 className="text-[11px] sm:text-xs font-bold uppercase tracking-wider text-slate-900 mb-2">
+                  Key Deliverables &amp; Capabilities
+                </h4>
+                <div className="space-y-1.5">
+                  {activeServiceModal.deliverables.map((item, dIdx) => (
+                    <div key={dIdx} className="flex items-start gap-2 text-xs text-slate-700 leading-snug">
+                      <CheckCircle2 className="w-3.5 h-3.5 text-blue-600 shrink-0 mt-0.5" />
+                      <span>{item}</span>
+                    </div>
+                  ))}
+                </div>
+              </div>
+
+              {/* Technologies */}
+              <div className="mb-4">
+                <h4 className="text-[11px] sm:text-xs font-bold uppercase tracking-wider text-slate-900 mb-2">
+                  Technologies &amp; Tools
+                </h4>
+                <div className="flex flex-wrap gap-1.5">
+                  {activeServiceModal.techStack.map((tech, tIdx) => (
+                    <span
+                      key={tIdx}
+                      className="text-[10px] sm:text-xs font-medium px-2 py-0.5 bg-slate-100 border border-slate-200 text-slate-700 rounded-md"
+                    >
+                      {tech}
+                    </span>
+                  ))}
+                </div>
+              </div>
+
+              {/* Results Metric */}
+              <div className="mb-5 p-2.5 rounded-xl bg-blue-50/70 border border-blue-100 flex items-center gap-2 text-xs font-semibold text-blue-900">
+                <Zap className="w-4 h-4 text-amber-500 shrink-0" />
+                <span>{activeServiceModal.resultsMetric}</span>
+              </div>
+
+              {/* Action Buttons */}
+              <div className="flex flex-col sm:flex-row items-stretch gap-2.5 pt-3 border-t border-slate-100">
+                <button
+                  type="button"
+                  onClick={(e) => scrollToContact(e, activeServiceModal.title)}
+                  className="flex-1 inline-flex items-center justify-center gap-1.5 px-4 py-2.5 rounded-xl bg-blue-600 hover:bg-blue-700 text-white text-xs sm:text-sm font-bold shadow-xs transition-all cursor-pointer text-center"
+                >
+                  <span>Inquire for this Service</span>
+                  <ArrowRight className="w-3.5 h-3.5" />
+                </button>
+
+                <button
+                  type="button"
+                  onClick={(e) => scrollToDeliveredProject(e, activeServiceModal.featuredDeliveredProject)}
+                  className="inline-flex items-center justify-center gap-1.5 px-4 py-2.5 rounded-xl border border-slate-300 hover:border-slate-400 text-slate-800 text-xs sm:text-sm font-bold transition-all cursor-pointer"
+                >
+                  <span>View Delivered Work</span>
+                </button>
+              </div>
+            </div>
+          </div>
+        )}
       </div>
     </section>
   );

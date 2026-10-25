@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useState, useMemo } from "react";
+import React, { useState, useMemo, useEffect } from "react";
 import Image from "next/image";
 import {
   Search,
@@ -20,11 +20,46 @@ import {
   announcementCategories,
 } from "@/config/announcementsAndGalleryContent";
 
+function getAnnouncementProjectName(item) {
+  if (!item) return "";
+  if (item.tags && item.tags.length > 0) {
+    const primaryTag = item.tags[0];
+    if (primaryTag === "Jovix") return "Jovix 50+ Milestone";
+    if (primaryTag === "GITA Campus") return "AI Tech Workshop";
+    if (primaryTag === "Interactive Demos") return "Live Prototypes";
+    return primaryTag;
+  }
+  if (item.title.includes(": ")) {
+    const after = item.title.split(": ")[1];
+    return after.split(" — ")[0].split(" ")[0];
+  }
+  return item.title.split(" — ")[0];
+}
+
 export default function AnnouncementsFeed() {
   const [activeCategory, setActiveCategory] = useState("all");
   const [searchQuery, setSearchQuery] = useState("");
   const [selectedAnnouncement, setSelectedAnnouncement] = useState(null);
   const [copiedId, setCopiedId] = useState(null);
+
+  // Lock body scroll when modal is open
+  useEffect(() => {
+    if (selectedAnnouncement) {
+      document.body.style.overflow = "hidden";
+      const handleKeyDown = (e) => {
+        if (e.key === "Escape") {
+          setSelectedAnnouncement(null);
+        }
+      };
+      window.addEventListener("keydown", handleKeyDown);
+      return () => {
+        document.body.style.overflow = "";
+        window.removeEventListener("keydown", handleKeyDown);
+      };
+    } else {
+      document.body.style.overflow = "";
+    }
+  }, [selectedAnnouncement]);
 
   // Filtered & sorted announcements (pinned items first)
   const filteredAnnouncements = useMemo(() => {
@@ -145,13 +180,14 @@ export default function AnnouncementsFeed() {
           </button>
         </div>
       ) : (
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-6 lg:gap-8">
+        /* 2x2 grid on mobile (< sm), 2 cols on tablet, 3 cols on desktop */
+        <div className="grid grid-cols-2 sm:grid-cols-2 lg:grid-cols-3 gap-2.5 sm:gap-6 lg:gap-8">
           {filteredAnnouncements.map((item) => (
             <article
               key={item.id}
               id={item.id}
               onClick={() => setSelectedAnnouncement(item)}
-              className={`group flex flex-col justify-between bg-white rounded-2xl sm:rounded-3xl border transition-all duration-300 overflow-hidden cursor-pointer shadow-xs hover:shadow-xl ${
+              className={`group flex flex-col justify-between bg-white rounded-xl sm:rounded-3xl border transition-all duration-300 overflow-hidden cursor-pointer shadow-xs hover:shadow-xl ${
                 item.pinned
                   ? "border-blue-300 ring-2 ring-blue-500/10 hover:border-blue-400"
                   : "border-slate-200/90 hover:border-slate-300"
@@ -159,25 +195,25 @@ export default function AnnouncementsFeed() {
             >
               <div>
                 {/* Image Header */}
-                <div className="relative w-full aspect-[16/10] bg-slate-100 overflow-hidden">
+                <div className="relative w-full aspect-[4/3] sm:aspect-[16/10] bg-slate-100 overflow-hidden">
                   <Image
                     src={item.image}
                     alt={item.imageAlt}
                     fill
-                    sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
+                    sizes="(max-width: 640px) 50vw, (max-width: 1200px) 50vw, 33vw"
                     loading="lazy"
                     className="object-cover w-full h-full group-hover:scale-105 transition-transform duration-500 ease-out"
                   />
 
                   {/* Top Badges */}
-                  <div className="absolute top-3 left-3 right-3 sm:top-3.5 sm:left-3.5 sm:right-3.5 z-10 flex items-center justify-between">
-                    <span className="text-[10px] sm:text-[11px] font-bold uppercase tracking-wider px-2.5 py-0.5 sm:px-3 sm:py-1 bg-white/95 backdrop-blur-md text-slate-900 rounded-full shadow-xs">
+                  <div className="absolute top-1.5 left-1.5 right-1.5 sm:top-3.5 sm:left-3.5 sm:right-3.5 z-10 flex items-center justify-between">
+                    <span className="text-[9px] sm:text-[11px] font-bold uppercase tracking-wider px-1.5 py-0.5 sm:px-3 sm:py-1 bg-white/95 backdrop-blur-md text-slate-900 rounded-full shadow-xs">
                       {item.badge}
                     </span>
 
                     {item.pinned && (
-                      <span className="inline-flex items-center gap-1 text-[10px] sm:text-[11px] font-bold px-2 py-0.5 sm:px-2.5 sm:py-1 bg-blue-600 text-white rounded-full shadow-xs">
-                        <Pin className="w-3 h-3 fill-white" />
+                      <span className="inline-flex items-center gap-1 text-[9px] sm:text-[11px] font-bold px-1.5 py-0.5 sm:px-2.5 sm:py-1 bg-blue-600 text-white rounded-full shadow-xs">
+                        <Pin className="w-2.5 h-2.5 sm:w-3 sm:h-3 fill-white" />
                         <span>Pinned</span>
                       </span>
                     )}
@@ -185,28 +221,30 @@ export default function AnnouncementsFeed() {
                 </div>
 
                 {/* Body Content */}
-                <div className="p-4 sm:p-6">
+                <div className="p-2.5 sm:p-6">
                   {/* Meta date + Author */}
-                  <div className="flex items-center justify-between text-xs text-slate-500 mb-2">
-                    <div className="inline-flex items-center gap-1.5 font-medium text-[11px] sm:text-xs">
-                      <Calendar className="w-3.5 h-3.5 text-slate-400" />
+                  <div className="flex items-center justify-between text-xs text-slate-500 mb-1 sm:mb-2">
+                    <div className="inline-flex items-center gap-1 sm:gap-1.5 font-medium text-[10px] sm:text-xs">
+                      <Calendar className="w-3 h-3 sm:w-3.5 sm:h-3.5 text-slate-400" />
                       <span>{item.date}</span>
                     </div>
-                    <span className="text-[10px] sm:text-[11px] font-semibold text-slate-400 truncate max-w-[130px]">
+                    <span className="hidden sm:inline-block text-[10px] sm:text-[11px] font-semibold text-slate-400 truncate max-w-[130px]">
                       By {item.author}
                     </span>
                   </div>
 
-                  <h3 className="text-base sm:text-lg font-black text-slate-950 tracking-tight leading-snug mb-2 group-hover:text-blue-600 transition-colors line-clamp-2">
-                    {item.title}
+                  <h3 className="text-xs sm:text-base md:text-lg font-black text-slate-950 tracking-tight leading-snug mb-1 sm:mb-2 group-hover:text-blue-600 transition-colors">
+                    <span className="sm:hidden line-clamp-1">{getAnnouncementProjectName(item)}</span>
+                    <span className="hidden sm:inline line-clamp-2">{item.title}</span>
                   </h3>
 
-                  <p className="text-xs sm:text-sm text-slate-600 leading-relaxed font-normal mb-3 sm:mb-4 line-clamp-3">
+                  {/* Summary - Desktop only (don't elaborate on mobile UI) */}
+                  <p className="hidden sm:block text-xs sm:text-sm text-slate-600 leading-relaxed font-normal mb-3 sm:mb-4 line-clamp-3">
                     {item.summary}
                   </p>
 
-                  {/* Tag Chips */}
-                  <div className="flex flex-wrap gap-1.5 pt-3 border-t border-slate-100">
+                  {/* Tag Chips - Desktop only */}
+                  <div className="hidden sm:flex flex-wrap gap-1.5 pt-3 border-t border-slate-100">
                     {item.tags.slice(0, 3).map((tag, tIdx) => (
                       <span
                         key={tIdx}
@@ -221,11 +259,17 @@ export default function AnnouncementsFeed() {
                       </span>
                     )}
                   </div>
+
+                  {/* Mobile simple tap indicator */}
+                  <div className="sm:hidden pt-1.5 mt-1 border-t border-slate-100 flex items-center justify-between text-[10px] font-bold text-blue-600">
+                    <span>Read Details</span>
+                    <ArrowRight className="w-3 h-3 group-hover:translate-x-0.5 transition-transform" />
+                  </div>
                 </div>
               </div>
 
-              {/* Bottom Actions */}
-              <div className="p-5 sm:p-6 pt-0 flex items-center justify-between border-t border-slate-100 mt-2">
+              {/* Bottom Actions - Desktop only */}
+              <div className="hidden sm:flex p-5 sm:p-6 pt-0 items-center justify-between border-t border-slate-100 mt-2">
                 <span className="inline-flex items-center gap-1.5 text-xs font-bold text-blue-600 group-hover:text-blue-700">
                   <span>Read Full Post</span>
                   <ArrowRight className="w-3.5 h-3.5 group-hover:translate-x-1 transition-transform" />

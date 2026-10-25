@@ -612,6 +612,37 @@ export const deliveredProjectsList = [
     techStack: ["Next.js", "WebSockets", "Redis", "Tailwind CSS", "PWA"],
   },
   {
+    id: "dr-radhamadhab-sahu",
+    title: "Dr. Radhamadhab Sahu — Senior ENT & Skull Base Surgeon",
+    client: "Dr. Radhamadhab Sahu (SUM Ultimate Medicare)",
+    location: "Kalinga Nagar & SUM Ultimate Medicare, Bhubaneswar",
+    status: "Live Production",
+    year: "2026",
+    category: "websites",
+    categoryLabel: "Healthcare & Skull Base Surgery",
+    secondaryCategory: "healthcare",
+    image: "/images/portfolio-dr-radhamadhab-sahu.jpg",
+    imageAlt: "Dr. Radhamadhab Sahu Senior ENT and Skull Base Surgeon official practice portal",
+    liveUrl: "https://dr-radhamadhab-sahu.vercel.app/",
+    liveUrlLabel: "Visit Live Website",
+    hasCrown: true,
+    summary:
+      "Official surgical practice and clinical portal for Dr. Radhamadhab Sahu, Senior Consultant & HOD of ENT & Skull Base Surgery at SUM Ultimate Medicare and founder of E.N.T. & Cancer Super-Speciality Clinic.",
+    outcomeMetric: "+220% Consultations",
+    metricDescription: "Growth in specialized skull base, endoscopic sinus, and head-and-neck surgical referrals.",
+    challenge:
+      "Patients requiring complex cranial corridor and skull base interventions need instant access to verified credentials (DNB VMMC New Delhi, 3-yr Neurosurgery training) and clear scheduling between hospital OPD and private clinic hours.",
+    solution:
+      "Developed a high-authority medical authority platform showcasing multi-center OPD timetables, verifiable printed clinic brochures, skull base operative philosophy, and immediate emergency contact channels.",
+    features: [
+      "Dual-center OPD scheduling (SUM Ultimate Medicare & Ghatikia Super-Speciality Clinic)",
+      "Verified residency credentials (VMMC & Safdarjung Hospital, New Delhi)",
+      "Interactive digital patient education brochure & surgical treatment guides",
+      "Instant 1-tap emergency telephonic triage & WhatsApp consultation booking",
+    ],
+    techStack: ["Next.js", "React", "Tailwind CSS", "Medical Authority Schema", "Vercel"],
+  },
+  {
     id: "flexisuite-custom-erp",
     title: "FlexiSuite — Custom Enterprise ERP & Operations Software",
     client: "Eastern Manufacturing & Logistics Consortium",
@@ -773,6 +804,7 @@ export const deliveredProjectsList = [
     secondaryCategory: "healthcare",
     image: "/images/portfolio-dr-abhishek-anand.jpg",
     imageAlt: "Dr. Abhishek Anand Paediatric Surgeon at New Life Clinic Bhubaneswar official website",
+    imagePosition: "center 18%",
     liveUrl: "https://dr-abhishek-anand.vercel.app/",
     liveUrlLabel: "Visit Live Website",
     summary:
@@ -791,36 +823,7 @@ export const deliveredProjectsList = [
     ],
     techStack: ["Next.js", "React", "Tailwind CSS", "WhatsApp Cloud API", "Vercel"],
   },
-  {
-    id: "dr-radhamadhab-sahu",
-    title: "Dr. Radhamadhab Sahu — Senior ENT & Skull Base Surgeon",
-    client: "Dr. Radhamadhab Sahu (SUM Ultimate Medicare)",
-    location: "Kalinga Nagar & SUM Ultimate Medicare, Bhubaneswar",
-    status: "Live Production",
-    year: "2026",
-    category: "websites",
-    categoryLabel: "Healthcare & Skull Base Surgery",
-    secondaryCategory: "healthcare",
-    image: "/images/portfolio-dr-radhamadhab-sahu.jpg",
-    imageAlt: "Dr. Radhamadhab Sahu Senior ENT and Skull Base Surgeon official practice portal",
-    liveUrl: "https://dr-radhamadhab-sahu.vercel.app/",
-    liveUrlLabel: "Visit Live Website",
-    summary:
-      "Official surgical practice and clinical portal for Dr. Radhamadhab Sahu, Senior Consultant & HOD of ENT & Skull Base Surgery at SUM Ultimate Medicare and founder of E.N.T. & Cancer Super-Speciality Clinic.",
-    outcomeMetric: "+220% Consultations",
-    metricDescription: "Growth in specialized skull base, endoscopic sinus, and head-and-neck surgical referrals.",
-    challenge:
-      "Patients requiring complex cranial corridor and skull base interventions need instant access to verified credentials (DNB VMMC New Delhi, 3-yr Neurosurgery training) and clear scheduling between hospital OPD and private clinic hours.",
-    solution:
-      "Developed a high-authority medical authority platform showcasing multi-center OPD timetables, verifiable printed clinic brochures, skull base operative philosophy, and immediate emergency contact channels.",
-    features: [
-      "Dual-center OPD scheduling (SUM Ultimate Medicare & Ghatikia Super-Speciality Clinic)",
-      "Verified residency credentials (VMMC & Safdarjung Hospital, New Delhi)",
-      "Interactive digital patient education brochure & surgical treatment guides",
-      "Instant 1-tap emergency telephonic triage & WhatsApp consultation booking",
-    ],
-    techStack: ["Next.js", "React", "Tailwind CSS", "Medical Authority Schema", "Vercel"],
-  },
+
   {
     id: "medixcare-clinic-erp",
     title: "MedixCare — Clinic Operations & EHR Management System",

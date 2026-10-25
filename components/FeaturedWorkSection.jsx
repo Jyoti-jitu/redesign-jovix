@@ -39,8 +39,8 @@ export default function FeaturedWorkSection({ config = featuredWorkConfig }) {
           </a>
         </div>
 
-        {/* Projects Grid: 1 col on mobile, 2 col on tablet, 3 col on desktop */}
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-6 lg:gap-8">
+        {/* Projects Grid: 2x2 on mobile (< sm), 2 col on tablet, 3 col on desktop */}
+        <div className="grid grid-cols-2 sm:grid-cols-2 lg:grid-cols-3 gap-2.5 sm:gap-6 lg:gap-8">
           {projects.map((project) => (
             <ProjectCard key={project.id} project={project} />
           ))}

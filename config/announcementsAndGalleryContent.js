@@ -21,10 +21,10 @@ export const announcementsHero = {
   subtitle:
     "Follow our latest client launches, engineering milestones, tech releases, and behind-the-scenes visual media from our design studio.",
   stats: [
-    { value: "6+", label: "Recent Launches" },
-    { value: "50+", label: "Delivered Systems" },
-    { value: "Weekly", label: "Live Updates" },
-    { value: "100%", label: "Real Client Data" },
+    { value: "50+", label: "Delivered Projects" },
+    { value: "14+", label: "Interactive Prototype Demos" },
+    { value: "98%", label: "Client Satisfaction" },
+    { value: "100%", label: "On-Time Handover" },
   ],
 };
 

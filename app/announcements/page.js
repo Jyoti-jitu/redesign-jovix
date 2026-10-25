@@ -6,6 +6,7 @@ import AnnouncementsAndGalleryView from "@/components/announcements/Announcement
 import { announcementsHero, announcementsList } from "@/config/announcementsAndGalleryContent";
 import Link from "next/link";
 import { Bell, Sparkles, TrendingUp } from "lucide-react";
+import CountUp from "@/components/CountUp";
 
 export const metadata = {
   title: "Announcements & Company Updates | Jovix",
@@ -122,18 +123,25 @@ export default function AnnouncementsPage() {
               </p>
             </div>
 
-            {/* Quick Stats Grid */}
-            <div className="grid grid-cols-2 md:grid-cols-4 gap-3 sm:gap-6 pt-5 sm:pt-6 border-t border-slate-200/80">
+            {/* Quick Stats Grid: 4 stats in 1 single line on mobile screen */}
+            <div className="grid grid-cols-4 gap-1.5 sm:gap-6 pt-4 sm:pt-6 border-t border-slate-200/80">
               {announcementsHero.stats.map((stat, sIdx) => (
                 <div
                   key={sIdx}
-                  className="p-3 sm:p-5 rounded-xl sm:rounded-2xl bg-white border border-slate-200/90 shadow-xs"
+                  className="p-1.5 xs:p-2.5 sm:p-5 rounded-lg sm:rounded-2xl bg-white border border-slate-200/90 shadow-xs flex flex-col items-center justify-center text-center"
                 >
-                  <div className="text-2xl sm:text-4xl font-black text-blue-600">
-                    {stat.value}
+                  <div className="text-base xs:text-lg sm:text-3xl lg:text-4xl font-black text-blue-600 tracking-tight leading-none mb-1">
+                    <CountUp value={stat.value} />
                   </div>
-                  <div className="text-[11px] sm:text-sm font-semibold text-slate-600 mt-0.5 sm:mt-1">
-                    {stat.label}
+                  <div className="text-[8px] xs:text-[9.5px] sm:text-xs md:text-sm font-bold text-slate-600 leading-tight">
+                    {stat.label === "Interactive Prototype Demos" ? (
+                      <>
+                        <span className="sm:hidden">Interactive Demos</span>
+                        <span className="hidden sm:inline">Interactive Prototype Demos</span>
+                      </>
+                    ) : (
+                      stat.label
+                    )}
                   </div>
                 </div>
               ))}

@@ -1,29 +1,56 @@
 "use client";
 
-import React from "react";
+import React, { useState, useEffect, useRef } from "react";
 import { ArrowRight } from "lucide-react";
 import ServiceCard from "@/components/ServiceCard";
 import { servicesConfig } from "@/config/landingContent";
 
 /**
  * Our Services Section
- * Follows the reference design with razor-sharp typography and high contrast.
+ * When the user scrolls past the top text and reaches the service cards catalog,
+ * all components smoothly elevate upwards from bottom to top with a slow, elegant stagger.
  */
 export default function ServicesSection({ config = servicesConfig }) {
   const { badge, titlePart1, titleHighlight, description, viewAllLink, services } = config;
+  const [isCatalogVisible, setIsCatalogVisible] = useState(false);
+  const cardsGridRef = useRef(null);
+
+  useEffect(() => {
+    const el = cardsGridRef.current;
+    if (!el) return;
+
+    const observer = new IntersectionObserver(
+      (entries) => {
+        const entry = entries[0];
+        // Trigger precisely when the user scrolls to the cards catalog
+        if (entry.isIntersecting) {
+          setIsCatalogVisible(true);
+        } else {
+          setIsCatalogVisible(false);
+        }
+      },
+      {
+        threshold: 0.1,
+        rootMargin: "0px 0px -40px 0px",
+      }
+    );
+
+    observer.observe(el);
+    return () => observer.disconnect();
+  }, []);
 
   return (
     <section
       id="services"
       aria-label="Our Services and Capabilities"
-      className="w-full bg-white py-10 sm:py-20 lg:py-24 border-b border-slate-200/80"
+      className="w-full bg-white py-10 sm:py-20 lg:py-24 border-b border-slate-200/80 overflow-hidden"
     >
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         {/* Header Layout: 2-column on desktop, stacked on mobile */}
         <div className="flex flex-col lg:flex-row lg:items-end lg:justify-between gap-4 sm:gap-6 mb-8 sm:mb-14">
           {/* Left Column: Badge + Main Heading */}
           <div className="max-w-xl">
-            <span className="text-[11px] sm:text-sm font-extrabold uppercase tracking-widest text-slate-500 mb-1.5 sm:mb-2.5 block">
+            <span className="text-[11px] sm:text-sm font-extrabold uppercase tracking-widest text-slate-500 mb-1.5 sm:mb-2 block">
               {badge}
             </span>
             <h2 className="text-2xl sm:text-4xl lg:text-5xl font-black text-slate-950 tracking-tight leading-tight">
@@ -33,7 +60,7 @@ export default function ServicesSection({ config = servicesConfig }) {
           </div>
 
           {/* Right Column: Description + View All Services Link */}
-          <div className="max-w-md lg:text-left flex flex-col items-start gap-3 sm:gap-4">
+          <div className="max-w-md lg:text-left flex flex-col items-start gap-2.5 sm:gap-3.5">
             <p className="text-xs sm:text-base font-medium text-slate-700 leading-relaxed">
               {description}
             </p>
@@ -47,10 +74,25 @@ export default function ServicesSection({ config = servicesConfig }) {
           </div>
         </div>
 
-        {/* 4 Service Cards Grid: 1 col on mobile, 2 cols on tablet, 4 cols on desktop */}
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 sm:gap-6">
-          {services.map((service) => (
-            <ServiceCard key={service.id} service={service} />
+        {/* 4 Service Cards Grid: Elevates up when user reaches the catalog */}
+        <div
+          ref={cardsGridRef}
+          className="grid grid-cols-2 sm:grid-cols-2 lg:grid-cols-4 gap-2.5 sm:gap-6"
+        >
+          {services.map((service, index) => (
+            <div
+              key={service.id}
+              className={`h-full transform transition-all duration-1000 ease-out ${
+                isCatalogVisible
+                  ? "opacity-100 translate-y-0 scale-100"
+                  : "opacity-0 translate-y-20 scale-[0.96]"
+              }`}
+              style={{
+                transitionDelay: isCatalogVisible ? `${index * 160}ms` : "0ms",
+              }}
+            >
+              <ServiceCard service={service} />
+            </div>
           ))}
         </div>
       </div>

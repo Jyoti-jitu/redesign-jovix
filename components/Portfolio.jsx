@@ -62,30 +62,30 @@ export default function Portfolio() {
           </div>
         </div>
 
-        {/* Projects Grid */}
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
+        {/* Projects Grid: 2x2 on mobile (< md), 2 on md */}
+        <div className="grid grid-cols-2 md:grid-cols-2 gap-2.5 sm:gap-8">
           {PROJECTS.map((project, index) => (
             <div
               key={index}
-              className="group bg-white rounded-2xl border border-slate-200/80 overflow-hidden shadow-sm hover:shadow-xl hover:border-blue-200 transition-all duration-300 flex flex-col justify-between"
+              className="group bg-white rounded-xl sm:rounded-2xl border border-slate-200/80 overflow-hidden shadow-xs hover:shadow-xl hover:border-blue-200 transition-all duration-300 flex flex-col justify-between cursor-pointer"
             >
               {/* Decorative Project Header */}
               <div
-                className={`h-44 sm:h-52 bg-gradient-to-br ${project.gradient} p-6 sm:p-8 flex flex-col justify-between text-white relative overflow-hidden`}
+                className={`h-24 sm:h-52 bg-gradient-to-br ${project.gradient} p-2.5 sm:p-8 flex flex-col justify-between text-white relative overflow-hidden`}
               >
                 <div className="absolute right-0 bottom-0 translate-x-6 translate-y-6 opacity-10">
-                  <Layers className="w-48 h-48" />
+                  <Layers className="w-24 h-24 sm:w-48 sm:h-48" />
                 </div>
                 <div className="flex items-center justify-between z-10">
-                  <span className="text-xs font-semibold tracking-wider uppercase px-3 py-1 bg-white/20 backdrop-blur-md rounded-full">
+                  <span className="text-[9px] sm:text-xs font-semibold tracking-wider uppercase px-2 py-0.5 sm:px-3 sm:py-1 bg-white/20 backdrop-blur-md rounded-full">
                     {project.category}
                   </span>
-                  <div className="w-9 h-9 rounded-full bg-white/10 group-hover:bg-white text-white group-hover:text-slate-900 flex items-center justify-center transition-colors">
-                    <ArrowUpRight className="w-4 h-4" />
+                  <div className="w-6 h-6 sm:w-9 sm:h-9 rounded-full bg-white/10 group-hover:bg-white text-white group-hover:text-slate-900 flex items-center justify-center transition-colors">
+                    <ArrowUpRight className="w-3 h-3 sm:w-4 sm:h-4" />
                   </div>
                 </div>
 
-                <div className="z-10">
+                <div className="z-10 hidden sm:block">
                   <div className="inline-flex items-center gap-2 px-3 py-1 bg-white/10 backdrop-blur-md rounded-lg text-xs font-medium text-white/90">
                     <TrendingUp className="w-3.5 h-3.5 text-blue-300" />
                     <span>Key Outcome: {project.metric}</span>
@@ -94,17 +94,17 @@ export default function Portfolio() {
               </div>
 
               {/* Project Details */}
-              <div className="p-6 sm:p-8 flex-1 flex flex-col justify-between">
+              <div className="p-2.5 sm:p-8 flex-1 flex flex-col justify-between">
                 <div>
-                  <h3 className="text-xl sm:text-2xl font-bold text-slate-900 mb-2 group-hover:text-blue-600 transition-colors">
+                  <h3 className="text-xs sm:text-2xl font-bold text-slate-900 mb-1 sm:mb-2 group-hover:text-blue-600 transition-colors line-clamp-1 sm:line-clamp-none">
                     {project.title}
                   </h3>
-                  <p className="text-slate-600 text-sm sm:text-base leading-relaxed mb-6">
+                  <p className="hidden sm:block text-slate-600 text-sm sm:text-base leading-relaxed mb-6">
                     {project.summary}
                   </p>
                 </div>
 
-                <div className="flex flex-wrap gap-2 pt-4 border-t border-slate-100">
+                <div className="hidden sm:flex flex-wrap gap-2 pt-4 border-t border-slate-100">
                   {project.tags.map((tag, tIdx) => (
                     <span
                       key={tIdx}
@@ -113,6 +113,12 @@ export default function Portfolio() {
                       {tag}
                     </span>
                   ))}
+                </div>
+
+                {/* Mobile tap indicator */}
+                <div className="sm:hidden pt-1.5 mt-1 border-t border-slate-100 flex items-center justify-between text-[10px] font-bold text-blue-600">
+                  <span>Details</span>
+                  <ArrowUpRight className="w-2.5 h-2.5" />
                 </div>
               </div>
             </div>

@@ -7,6 +7,7 @@ import ServicesTestimonials from "@/components/services/ServicesTestimonials";
 import { demoProjectsList } from "@/config/servicesContent";
 import Link from "next/link";
 import { ArrowDown, ArrowRight, Sparkles, CheckCircle2 } from "lucide-react";
+import CountUp from "@/components/CountUp";
 
 export const metadata = {
   title: "Interactive Demo Projects & Concept Prototypes | Jovix",
@@ -147,22 +148,34 @@ export default function DemoProjectsPage() {
             </div>
 
             {/* Quick Metrics Bar */}
-            <div className="grid grid-cols-2 md:grid-cols-4 gap-3 sm:gap-6 pt-5 sm:pt-8 border-t border-slate-200/80">
-              <div className="p-3 sm:p-5 rounded-xl sm:rounded-2xl bg-white border border-slate-200/90 shadow-xs">
-                <div className="text-2xl sm:text-4xl font-black text-blue-600">9+</div>
-                <div className="text-[11px] sm:text-sm font-semibold text-slate-600 mt-0.5 sm:mt-1">Classified Prototypes</div>
+            {/* Quick Metrics Bar: 4 stats in 1 single line on mobile screen */}
+            <div className="grid grid-cols-4 gap-1.5 sm:gap-6 pt-4 sm:pt-8 border-t border-slate-200/80">
+              <div className="p-1.5 xs:p-2.5 sm:p-5 rounded-lg sm:rounded-2xl bg-white border border-slate-200/90 shadow-xs flex flex-col items-center justify-center text-center">
+                <div className="text-base xs:text-lg sm:text-3xl lg:text-4xl font-black text-blue-600 tracking-tight leading-none mb-1">
+                  <CountUp value="50+" />
+                </div>
+                <div className="text-[8px] xs:text-[9.5px] sm:text-xs md:text-sm font-bold text-slate-600 leading-tight">Delivered Projects</div>
               </div>
-              <div className="p-3 sm:p-5 rounded-xl sm:rounded-2xl bg-white border border-slate-200/90 shadow-xs">
-                <div className="text-2xl sm:text-4xl font-black text-blue-600">6</div>
-                <div className="text-[11px] sm:text-sm font-semibold text-slate-600 mt-0.5 sm:mt-1">Industry Domains</div>
+              <div className="p-1.5 xs:p-2.5 sm:p-5 rounded-lg sm:rounded-2xl bg-white border border-slate-200/90 shadow-xs flex flex-col items-center justify-center text-center">
+                <div className="text-base xs:text-lg sm:text-3xl lg:text-4xl font-black text-blue-600 tracking-tight leading-none mb-1">
+                  <CountUp value="14+" />
+                </div>
+                <div className="text-[8px] xs:text-[9.5px] sm:text-xs md:text-sm font-bold text-slate-600 leading-tight">
+                  <span className="sm:hidden">Interactive Demos</span>
+                  <span className="hidden sm:inline">Interactive Prototype Demos</span>
+                </div>
               </div>
-              <div className="p-3 sm:p-5 rounded-xl sm:rounded-2xl bg-white border border-slate-200/90 shadow-xs">
-                <div className="text-2xl sm:text-4xl font-black text-blue-600">100%</div>
-                <div className="text-[11px] sm:text-sm font-semibold text-slate-600 mt-0.5 sm:mt-1">Testable In Browser</div>
+              <div className="p-1.5 xs:p-2.5 sm:p-5 rounded-lg sm:rounded-2xl bg-white border border-slate-200/90 shadow-xs flex flex-col items-center justify-center text-center">
+                <div className="text-base xs:text-lg sm:text-3xl lg:text-4xl font-black text-blue-600 tracking-tight leading-none mb-1">
+                  <CountUp value="98%" />
+                </div>
+                <div className="text-[8px] xs:text-[9.5px] sm:text-xs md:text-sm font-bold text-slate-600 leading-tight">Client Satisfaction</div>
               </div>
-              <div className="p-3 sm:p-5 rounded-xl sm:rounded-2xl bg-white border border-slate-200/90 shadow-xs">
-                <div className="text-2xl sm:text-4xl font-black text-blue-600">24/7</div>
-                <div className="text-[11px] sm:text-sm font-semibold text-slate-600 mt-0.5 sm:mt-1">Interactive Simulators</div>
+              <div className="p-1.5 xs:p-2.5 sm:p-5 rounded-lg sm:rounded-2xl bg-white border border-slate-200/90 shadow-xs flex flex-col items-center justify-center text-center">
+                <div className="text-base xs:text-lg sm:text-3xl lg:text-4xl font-black text-blue-600 tracking-tight leading-none mb-1">
+                  <CountUp value="100%" />
+                </div>
+                <div className="text-[8px] xs:text-[9.5px] sm:text-xs md:text-sm font-bold text-slate-600 leading-tight">On-Time Handover</div>
               </div>
             </div>
           </div>

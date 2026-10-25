@@ -17,10 +17,10 @@ export const trustConfig = {
     { src: "/images/avatars/avatar-4.webp", alt: "Client profile illustration" },
   ],
   stats: [
-    { value: "50+", label: "Projects Delivered" },
-    { value: "30+", label: "Happy Clients" },
-    { value: "5+", label: "Industries Served" },
+    { value: "50+", label: "Delivered Projects" },
+    { value: "14+", label: "Interactive Prototype Demos" },
     { value: "98%", label: "Client Satisfaction" },
+    { value: "100%", label: "On-Time Handover" },
   ],
   floatingCard: {
     text: "Practical Solutions for Real Businesses",
@@ -178,6 +178,16 @@ export const featuredWorkConfig = {
   },
   projects: [
     {
+      id: "dr-radhamadhab-sahu",
+      title: "Dr. Radhamadhab Sahu",
+      description: "Senior ENT & skull base surgery department practice portal.",
+      image: "/images/portfolio-dr-radhamadhab-sahu.jpg",
+      imageAlt: "Dr. Radhamadhab Sahu Senior ENT and Skull Base Surgeon official practice portal",
+      href: "https://dr-radhamadhab-sahu.vercel.app/",
+      hasCrown: true,
+      crownLabel: "Featured",
+    },
+    {
       id: "forecast-earthing",
       title: "Forecast Earthing",
       description: "Industrial grounding & safety forecasting platform.",
@@ -215,15 +225,8 @@ export const featuredWorkConfig = {
       description: "Paediatric surgeon & paediatric urology clinical practice in Bhubaneswar.",
       image: "/images/portfolio-dr-abhishek-anand.jpg",
       imageAlt: "Dr. Abhishek Anand Paediatric Surgeon at New Life Clinic Bhubaneswar official website",
+      imagePosition: "center 18%",
       href: "https://dr-abhishek-anand.vercel.app/",
-    },
-    {
-      id: "dr-radhamadhab-sahu",
-      title: "Dr. Radhamadhab Sahu",
-      description: "Senior ENT & skull base surgery department practice portal.",
-      image: "/images/portfolio-dr-radhamadhab-sahu.jpg",
-      imageAlt: "Dr. Radhamadhab Sahu Senior ENT and Skull Base Surgeon official practice portal",
-      href: "https://dr-radhamadhab-sahu.vercel.app/",
     },
     {
       id: "fluxchat",

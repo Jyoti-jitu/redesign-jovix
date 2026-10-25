@@ -16,6 +16,40 @@ import {
 } from "lucide-react";
 import { galleryList, galleryCategories } from "@/config/announcementsAndGalleryContent";
 
+function getProjectName(title) {
+  if (!title) return "";
+  let name = title;
+  if (name.includes(" — ")) name = name.split(" — ")[0].trim();
+  else if (name.includes(" - ")) name = name.split(" - ")[0].trim();
+  else if (name.includes(": ")) {
+    const parts = name.split(": ");
+    name = parts[1] || parts[0];
+    name = name.split(" — ")[0].split(" - ")[0].trim();
+  }
+
+  const suffixes = [
+    " Railway Portal",
+    " Real-Time App",
+    " AI Chatbot",
+    " Security",
+    " URL Shortener",
+    " Portfolio",
+    " Dental Clinic",
+  ];
+  for (const suffix of suffixes) {
+    if (name.endsWith(suffix)) {
+      name = name.slice(0, -suffix.length).trim();
+      break;
+    }
+  }
+
+  if (name.includes("Prof. Dr. Sandeep Kumar Panigrahi")) {
+    name = "Dr. Sandeep Panigrahi";
+  }
+
+  return name;
+}
+
 export default function MediaGallery() {
   const [activeCategory, setActiveCategory] = useState("all");
   const [searchQuery, setSearchQuery] = useState("");
@@ -147,12 +181,13 @@ export default function MediaGallery() {
           </button>
         </div>
       ) : (
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-6 lg:gap-8">
+        /* 2x2 grid on mobile (< sm), 2 cols on tablet, 3 cols on desktop */
+        <div className="grid grid-cols-2 sm:grid-cols-2 lg:grid-cols-3 gap-2.5 sm:gap-6 lg:gap-8">
           {filteredGallery.map((item, index) => (
             <div
               key={item.id}
               onClick={() => setActiveLightboxIndex(index)}
-              className="group relative flex flex-col bg-white rounded-2xl sm:rounded-3xl border border-slate-200/90 overflow-hidden shadow-xs hover:shadow-xl hover:border-slate-300 transition-all duration-300 cursor-pointer"
+              className="group relative flex flex-col bg-white rounded-xl sm:rounded-3xl border border-slate-200/90 overflow-hidden shadow-xs hover:shadow-xl hover:border-slate-300 transition-all duration-300 cursor-pointer"
             >
               {/* Media Thumbnail Container */}
               <div className="relative w-full aspect-[4/3] bg-slate-100 overflow-hidden">
@@ -160,46 +195,48 @@ export default function MediaGallery() {
                   src={item.image}
                   alt={item.imageAlt}
                   fill
-                  sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 33vw"
+                  sizes="(max-width: 640px) 50vw, (max-width: 1024px) 50vw, 33vw"
                   loading="lazy"
                   className="object-cover w-full h-full group-hover:scale-105 transition-transform duration-500 ease-out"
                 />
 
                 {/* Top Category Badge */}
-                <div className="absolute top-3 left-3 sm:top-3.5 sm:left-3.5 z-10">
-                  <span className="text-[10px] sm:text-[11px] font-bold uppercase tracking-wider px-2.5 py-0.5 sm:px-3 sm:py-1 bg-white/95 backdrop-blur-md text-slate-900 rounded-full shadow-xs">
+                <div className="absolute top-1.5 left-1.5 sm:top-3.5 sm:left-3.5 z-10">
+                  <span className="text-[9px] sm:text-[11px] font-bold uppercase tracking-wider px-1.5 py-0.5 sm:px-3 sm:py-1 bg-white/95 backdrop-blur-md text-slate-900 rounded-full shadow-xs">
                     {item.categoryLabel}
                   </span>
                 </div>
 
                 {/* Hover Maximize Overlay Icon */}
                 <div className="absolute inset-0 bg-slate-950/40 opacity-0 group-hover:opacity-100 transition-opacity duration-200 flex items-center justify-center">
-                  <div className="w-10 h-10 sm:w-12 sm:h-12 rounded-full bg-white/95 text-slate-900 flex items-center justify-center shadow-lg transform scale-90 group-hover:scale-100 transition-transform">
-                    <Maximize2 className="w-4 h-4 sm:w-5 sm:h-5 text-blue-600" />
+                  <div className="w-8 h-8 sm:w-12 sm:h-12 rounded-full bg-white/95 text-slate-900 flex items-center justify-center shadow-lg transform scale-90 group-hover:scale-100 transition-transform">
+                    <Maximize2 className="w-3.5 h-3.5 sm:w-5 sm:h-5 text-blue-600" />
                   </div>
                 </div>
               </div>
 
               {/* Caption & Metadata Bar */}
-              <div className="p-3.5 sm:p-5 flex flex-col justify-between flex-1">
+              <div className="p-2.5 sm:p-5 flex flex-col justify-between flex-1">
                 <div>
-                  <div className="flex items-center justify-between text-xs text-slate-400 mb-1">
-                    <span className="font-semibold text-slate-500 text-[11px] sm:text-xs truncate">{item.client}</span>
-                    <span className="flex items-center gap-1 text-[10px] sm:text-[11px]">
+                  <div className="flex items-center justify-between text-xs text-slate-400 mb-0.5 sm:mb-1">
+                    <span className="font-semibold text-slate-500 text-[9px] sm:text-xs truncate">{item.client}</span>
+                    <span className="hidden sm:inline-flex items-center gap-1 text-[10px] sm:text-[11px]">
                       <MapPin className="w-3 h-3 text-slate-400" />
                       {item.location}
                     </span>
                   </div>
-                  <h3 className="text-sm sm:text-base font-extrabold text-slate-950 tracking-tight leading-snug group-hover:text-blue-600 transition-colors line-clamp-2 mb-1.5 sm:mb-2">
-                    {item.title}
+                  <h3 className="text-xs sm:text-base font-extrabold text-slate-950 tracking-tight leading-snug group-hover:text-blue-600 transition-colors mb-0.5 sm:mb-2">
+                    <span className="sm:hidden line-clamp-1">{getProjectName(item.title)}</span>
+                    <span className="hidden sm:inline line-clamp-2">{item.title}</span>
                   </h3>
-                  <p className="text-[11px] sm:text-xs text-slate-600 leading-relaxed line-clamp-2 mb-2.5 sm:mb-3">
+                  {/* Caption - Desktop only */}
+                  <p className="hidden sm:block text-[11px] sm:text-xs text-slate-600 leading-relaxed line-clamp-2 mb-2.5 sm:mb-3">
                     {item.caption}
                   </p>
                 </div>
 
-                {/* Bottom Tag Pills */}
-                <div className="flex flex-wrap items-center gap-1.5 pt-3 border-t border-slate-100">
+                {/* Bottom Tag Pills - Desktop only */}
+                <div className="hidden sm:flex flex-wrap items-center gap-1.5 pt-3 border-t border-slate-100">
                   {item.tags.slice(0, 3).map((tag, tIdx) => (
                     <span
                       key={tIdx}
@@ -213,6 +250,12 @@ export default function MediaGallery() {
                       +{item.tags.length - 3}
                     </span>
                   )}
+                </div>
+
+                {/* Mobile simple tap indicator */}
+                <div className="sm:hidden pt-1.5 mt-1 border-t border-slate-100 flex items-center justify-between text-[10px] font-bold text-blue-600">
+                  <span>View Photo</span>
+                  <Maximize2 className="w-2.5 h-2.5" />
                 </div>
               </div>
             </div>

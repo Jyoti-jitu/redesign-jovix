@@ -4,6 +4,7 @@ import React from "react";
 import Link from "next/link";
 import { ArrowRight, ArrowDown, CheckCircle2, ShieldCheck, Sparkles, Zap } from "lucide-react";
 import { servicesPageHero } from "@/config/servicesContent";
+import CountUp from "@/components/CountUp";
 
 export default function ServicesHero() {
   const { badge, titlePart1, titleHighlight, subtitle, stats } = servicesPageHero;
@@ -80,18 +81,25 @@ export default function ServicesHero() {
           </div>
         </div>
 
-        {/* Trust & Stats Grid */}
-        <div className="grid grid-cols-2 md:grid-cols-4 gap-3 sm:gap-6 pt-5 sm:pt-8 border-t border-slate-200/80">
+        {/* Trust & Stats Grid: 4 stats in 1 single line on mobile screen */}
+        <div className="grid grid-cols-4 gap-1.5 sm:gap-6 pt-4 sm:pt-8 border-t border-slate-200/80">
           {stats.map((stat, idx) => (
             <div
               key={idx}
-              className="p-3 sm:p-5 rounded-xl sm:rounded-2xl bg-white border border-slate-200/90 shadow-xs hover:border-blue-200 hover:shadow-sm transition-all"
+              className="p-1.5 xs:p-2.5 sm:p-5 rounded-lg sm:rounded-2xl bg-white border border-slate-200/90 shadow-xs hover:border-blue-200 hover:shadow-sm transition-all flex flex-col items-center justify-center text-center"
             >
-              <div className="text-2xl sm:text-4xl font-black text-slate-900 tracking-tight text-blue-600">
-                {stat.value}
+              <div className="text-base xs:text-lg sm:text-3xl lg:text-4xl font-black tracking-tight text-blue-600 leading-none mb-1">
+                <CountUp value={stat.value} />
               </div>
-              <div className="text-[11px] sm:text-sm font-semibold text-slate-600 mt-0.5 sm:mt-1">
-                {stat.label}
+              <div className="text-[8px] xs:text-[9.5px] sm:text-xs md:text-sm font-bold text-slate-600 leading-tight">
+                {stat.label === "Interactive Prototype Demos" ? (
+                  <>
+                    <span className="sm:hidden">Interactive Demos</span>
+                    <span className="hidden sm:inline">Interactive Prototype Demos</span>
+                  </>
+                ) : (
+                  stat.label
+                )}
               </div>
             </div>
           ))}

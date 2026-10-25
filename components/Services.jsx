@@ -52,29 +52,29 @@ export default function Services() {
           </p>
         </div>
 
-        {/* Services Grid */}
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
+        {/* Services Grid: 2x2 on mobile (< md), 2 on md, 4 on lg */}
+        <div className="grid grid-cols-2 md:grid-cols-2 lg:grid-cols-4 gap-2.5 sm:gap-8">
           {SERVICES.map((service, index) => {
             const Icon = service.icon;
             return (
               <div
                 key={index}
-                className="group relative p-8 bg-slate-50/70 hover:bg-white rounded-2xl border border-slate-200/80 hover:border-blue-200 hover:shadow-xl hover:-translate-y-1 transition-all duration-300 flex flex-col justify-between"
+                className="group relative p-3 sm:p-8 bg-slate-50/70 hover:bg-white rounded-xl sm:rounded-2xl border border-slate-200/80 hover:border-blue-200 hover:shadow-xl transition-all duration-300 flex flex-col justify-between cursor-pointer"
               >
                 <div>
-                  <div className="w-12 h-12 rounded-xl bg-blue-50 text-blue-600 flex items-center justify-center mb-6 group-hover:bg-blue-600 group-hover:text-white transition-colors duration-300 shadow-sm">
-                    <Icon className="w-6 h-6" />
+                  <div className="w-8 h-8 sm:w-12 sm:h-12 rounded-lg sm:rounded-xl bg-blue-50 text-blue-600 flex items-center justify-center mb-2 sm:mb-6 group-hover:bg-blue-600 group-hover:text-white transition-colors duration-300 shadow-xs">
+                    <Icon className="w-4 h-4 sm:w-6 sm:h-6" />
                   </div>
-                  <h3 className="text-xl font-bold text-slate-900 mb-3 group-hover:text-blue-600 transition-colors">
+                  <h3 className="text-xs sm:text-xl font-bold text-slate-900 mb-1 sm:mb-3 group-hover:text-blue-600 transition-colors line-clamp-1 sm:line-clamp-2">
                     {service.title}
                   </h3>
-                  <p className="text-slate-600 text-sm leading-relaxed mb-6">
+                  <p className="hidden sm:block text-slate-600 text-sm leading-relaxed mb-6">
                     {service.description}
                   </p>
                 </div>
 
                 <div>
-                  <div className="flex flex-wrap gap-1.5 pt-4 border-t border-slate-200/60">
+                  <div className="hidden sm:flex flex-wrap gap-1.5 pt-4 border-t border-slate-200/60">
                     {service.tags.map((tag, tIdx) => (
                       <span
                         key={tIdx}
@@ -83,6 +83,10 @@ export default function Services() {
                         {tag}
                       </span>
                     ))}
+                  </div>
+                  <div className="sm:hidden pt-1.5 mt-1 border-t border-slate-200/60 flex items-center justify-between text-[10px] font-bold text-blue-600">
+                    <span>Details</span>
+                    <ArrowRight className="w-2.5 h-2.5 group-hover:translate-x-0.5 transition-transform" />
                   </div>
                 </div>
               </div>

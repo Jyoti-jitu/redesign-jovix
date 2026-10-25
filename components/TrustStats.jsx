@@ -4,6 +4,7 @@ import React from "react";
 import Image from "next/image";
 import { TrendingUp } from "lucide-react";
 import { trustConfig } from "@/config/landingContent";
+import CountUp from "@/components/CountUp";
 
 /**
  * Trust Statistics Section
@@ -56,24 +57,30 @@ export default function TrustStats({ config = trustConfig }) {
           </div>
         </div>
 
-        {/* Bottom Metrics Row: 4 stats with subtle vertical separators */}
-        <div className="grid grid-cols-2 lg:grid-cols-4 pt-5 sm:pt-10 gap-y-5 sm:gap-y-10">
+        {/* Bottom Metrics Row: 4 stats in 1 single line on mobile screen */}
+        <div className="grid grid-cols-4 pt-4 sm:pt-10 gap-1 sm:gap-4">
           {stats.map((stat, idx) => {
-            const isLastInRow = idx === stats.length - 1;
-            const isEven = idx % 2 === 1;
+            const isLast = idx === stats.length - 1;
 
             return (
               <div
                 key={stat.label}
-                className={`flex flex-col items-center justify-center text-center px-3 sm:px-4 ${
-                  !isLastInRow ? "lg:border-r lg:border-slate-200" : ""
-                } ${!isEven ? "border-r border-slate-200 lg:border-r-0" : ""}`}
+                className={`flex flex-col items-center justify-center text-center px-1 sm:px-4 ${
+                  !isLast ? "border-r border-slate-200" : ""
+                }`}
               >
-                <span className="text-2xl sm:text-4xl lg:text-5xl font-black text-slate-950 tracking-tight leading-none mb-1 sm:mb-2">
-                  {stat.value}
+                <span className="text-base xs:text-lg sm:text-3xl lg:text-5xl font-black text-slate-950 tracking-tight leading-none mb-1 sm:mb-2">
+                  <CountUp value={stat.value} />
                 </span>
-                <span className="text-[10px] sm:text-xs font-bold uppercase tracking-wider text-slate-600">
-                  {stat.label}
+                <span className="text-[8px] xs:text-[9.5px] sm:text-xs font-bold uppercase tracking-wider text-slate-600 leading-tight">
+                  {stat.label === "Interactive Prototype Demos" ? (
+                    <>
+                      <span className="sm:hidden">Interactive Demos</span>
+                      <span className="hidden sm:inline">Interactive Prototype Demos</span>
+                    </>
+                  ) : (
+                    stat.label
+                  )}
                 </span>
               </div>
             );
