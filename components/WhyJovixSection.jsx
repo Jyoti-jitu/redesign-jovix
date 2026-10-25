@@ -68,9 +68,9 @@ export default function WhyJovixSection({ config = whyJovixConfig }) {
           ref={contentRef}
           className="grid grid-cols-1 lg:grid-cols-12 gap-6 sm:gap-10 lg:gap-14 items-center"
         >
-          {/* Left Column: Office Photograph — comes slowly from left to right */}
+          {/* Left Column: Office Photograph — slides smoothly from left to right */}
           <div
-            className={`lg:col-span-6 transform transition-all duration-[1500ms] ease-out ${
+            className={`lg:col-span-6 transform transition-all duration-700 ease-out ${
               isVisible
                 ? "opacity-100 translate-x-0"
                 : "opacity-0 -translate-x-20 sm:-translate-x-32 lg:-translate-x-40 pointer-events-none"
@@ -88,9 +88,9 @@ export default function WhyJovixSection({ config = whyJovixConfig }) {
             </div>
           </div>
 
-          {/* Right Column: Text & Benefits — comes slowly from right to left */}
+          {/* Right Column: Text & Benefits — slides smoothly from right to left */}
           <div
-            className={`lg:col-span-6 flex flex-col justify-center transform transition-all duration-[1500ms] ease-out delay-150 ${
+            className={`lg:col-span-6 flex flex-col justify-center transform transition-all duration-700 ease-out delay-100 ${
               isVisible
                 ? "opacity-100 translate-x-0"
                 : "opacity-0 translate-x-20 sm:translate-x-32 lg:translate-x-40 pointer-events-none"
@@ -120,9 +120,9 @@ export default function WhyJovixSection({ config = whyJovixConfig }) {
                   <div
                     key={benefit.id}
                     style={{
-                      transitionDelay: isVisible ? `${350 + idx * 120}ms` : "0ms",
+                      transitionDelay: isVisible ? `${200 + idx * 150}ms` : "0ms",
                     }}
-                    className={`flex items-start gap-3 sm:gap-4 group transform transition-all duration-[1200ms] ease-out ${
+                    className={`flex items-start gap-3 sm:gap-4 group transform transition-all duration-700 ease-out ${
                       isVisible
                         ? "opacity-100 translate-y-0"
                         : "opacity-0 translate-y-6"

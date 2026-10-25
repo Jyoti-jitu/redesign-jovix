@@ -14,6 +14,7 @@ export default function ServicesSection({ config = servicesConfig }) {
   const { badge, titlePart1, titleHighlight, description, viewAllLink, services } = config;
   const [isCatalogVisible, setIsCatalogVisible] = useState(false);
   const cardsGridRef = useRef(null);
+  const hasAnimatedRef = useRef(false);
 
   useEffect(() => {
     const el = cardsGridRef.current;
@@ -22,15 +23,14 @@ export default function ServicesSection({ config = servicesConfig }) {
     const observer = new IntersectionObserver(
       (entries) => {
         const entry = entries[0];
-        // Trigger precisely when the user scrolls to the cards catalog
-        if (entry.isIntersecting) {
+        // Trigger when the user scrolls to the cards catalog and keep still once revealed
+        if (entry.isIntersecting && !hasAnimatedRef.current) {
+          hasAnimatedRef.current = true;
           setIsCatalogVisible(true);
-        } else {
-          setIsCatalogVisible(false);
         }
       },
       {
-        threshold: 0.1,
+        threshold: 0.15,
         rootMargin: "0px 0px -40px 0px",
       }
     );
@@ -74,7 +74,7 @@ export default function ServicesSection({ config = servicesConfig }) {
           </div>
         </div>
 
-        {/* 4 Service Cards Grid: Elevates up when user reaches the catalog */}
+        {/* 4 Service Cards Grid: Elevates up comfortably when user reaches the catalog */}
         <div
           ref={cardsGridRef}
           className="grid grid-cols-2 sm:grid-cols-2 lg:grid-cols-4 gap-2.5 sm:gap-6"
@@ -82,13 +82,13 @@ export default function ServicesSection({ config = servicesConfig }) {
           {services.map((service, index) => (
             <div
               key={service.id}
-              className={`h-full transform transition-all duration-1000 ease-out ${
+              className={`h-full transform transition-all duration-700 ease-out ${
                 isCatalogVisible
                   ? "opacity-100 translate-y-0 scale-100"
-                  : "opacity-0 translate-y-20 scale-[0.96]"
+                  : "opacity-0 translate-y-16 scale-[0.97]"
               }`}
               style={{
-                transitionDelay: isCatalogVisible ? `${index * 160}ms` : "0ms",
+                transitionDelay: isCatalogVisible ? `${index * 150}ms` : "0ms",
               }}
             >
               <ServiceCard service={service} />

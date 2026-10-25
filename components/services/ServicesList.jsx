@@ -35,6 +35,7 @@ export default function ServicesList() {
   const [activeServiceModal, setActiveServiceModal] = useState(null);
   const [isCatalogVisible, setIsCatalogVisible] = useState(false);
   const cardsGridRef = useRef(null);
+  const hasAnimatedRef = useRef(false);
 
   useEffect(() => {
     const el = cardsGridRef.current;
@@ -43,14 +44,13 @@ export default function ServicesList() {
     const observer = new IntersectionObserver(
       (entries) => {
         const entry = entries[0];
-        if (entry.isIntersecting) {
+        if (entry.isIntersecting && !hasAnimatedRef.current) {
+          hasAnimatedRef.current = true;
           setIsCatalogVisible(true);
-        } else {
-          setIsCatalogVisible(false);
         }
       },
       {
-        threshold: 0.1,
+        threshold: 0.15,
         rootMargin: "0px 0px -40px 0px",
       }
     );
@@ -127,13 +127,13 @@ export default function ServicesList() {
                 key={service.id}
                 id={service.id}
                 onClick={() => setActiveServiceModal(service)}
-                className={`group relative flex flex-col justify-between bg-white rounded-xl sm:rounded-3xl border border-slate-200/90 shadow-xs hover:shadow-xl hover:border-blue-200 transform transition-all duration-1000 ease-out p-2.5 sm:p-8 lg:p-10 cursor-pointer ${
+                className={`group relative flex flex-col justify-between bg-white rounded-xl sm:rounded-3xl border border-slate-200/90 shadow-xs hover:shadow-xl hover:border-blue-200 transform transition-all duration-700 ease-out p-2.5 sm:p-8 lg:p-10 cursor-pointer ${
                   isCatalogVisible
                     ? "opacity-100 translate-y-0 scale-100"
-                    : "opacity-0 translate-y-20 scale-[0.96]"
+                    : "opacity-0 translate-y-16 scale-[0.97]"
                 }`}
                 style={{
-                  transitionDelay: isCatalogVisible ? `${index * 160}ms` : "0ms",
+                  transitionDelay: isCatalogVisible ? `${index * 150}ms` : "0ms",
                 }}
               >
                 <div>
