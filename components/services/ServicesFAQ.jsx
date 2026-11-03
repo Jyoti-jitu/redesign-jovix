@@ -34,20 +34,26 @@ export default function ServicesFAQ() {
             return (
               <div
                 key={idx}
-                className="rounded-xl sm:rounded-2xl border border-slate-200/90 overflow-hidden transition-all duration-200 bg-white"
+                className={`rounded-xl sm:rounded-2xl border transition-all duration-300 overflow-hidden bg-white ${
+                  isOpen
+                    ? "border-blue-300 shadow-md ring-1 ring-blue-100"
+                    : "border-slate-200/90 shadow-2xs hover:border-slate-300"
+                }`}
               >
                 <button
                   type="button"
                   onClick={() => toggle(idx)}
-                  className="w-full flex items-center justify-between gap-3 p-3.5 sm:p-6 text-left hover:bg-slate-50 transition-colors cursor-pointer"
+                  className="w-full flex items-center justify-between gap-3 p-4 sm:p-6 text-left hover:bg-slate-50/80 active:bg-slate-100/60 transition-colors cursor-pointer min-h-[48px]"
                   aria-expanded={isOpen}
                 >
-                  <span className="text-sm sm:text-lg font-bold text-slate-900">
+                  <span className={`text-sm sm:text-lg font-bold transition-colors ${
+                    isOpen ? "text-blue-600" : "text-slate-900"
+                  }`}>
                     {faq.question}
                   </span>
                   <div
-                    className={`w-7 h-7 sm:w-8 sm:h-8 rounded-full bg-slate-100 flex items-center justify-center shrink-0 transition-transform duration-200 ${
-                      isOpen ? "rotate-180 bg-blue-50 text-blue-600" : "text-slate-600"
+                    className={`w-7 h-7 sm:w-8 sm:h-8 rounded-full flex items-center justify-center shrink-0 transition-all duration-300 ${
+                      isOpen ? "rotate-180 bg-blue-100 text-blue-700 shadow-2xs" : "bg-slate-100 text-slate-600"
                     }`}
                   >
                     <ChevronDown className="w-3.5 h-3.5 sm:w-4 sm:h-4 stroke-[2.5]" />
@@ -55,7 +61,7 @@ export default function ServicesFAQ() {
                 </button>
 
                 {isOpen && (
-                  <div className="px-3.5 pb-4 sm:px-6 sm:pb-6 pt-1 text-xs sm:text-base text-slate-600 leading-relaxed border-t border-slate-100 animate-in fade-in duration-200">
+                  <div className="px-4 pb-4 sm:px-6 sm:pb-6 pt-1 text-xs sm:text-base text-slate-600 leading-relaxed border-t border-slate-100 animate-in fade-in duration-200">
                     {faq.answer}
                   </div>
                 )}

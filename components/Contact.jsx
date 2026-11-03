@@ -325,9 +325,9 @@ export default function Contact() {
         </div>
 
         {/* Horizontal Row: What to expect from Jovix & Prefer direct email? */}
-        <div className="mt-10 lg:mt-12 pt-8 lg:pt-10 border-t border-slate-200/90 grid grid-cols-1 lg:grid-cols-12 gap-6 items-stretch">
+        <div className="mt-10 lg:mt-12 pt-8 lg:pt-10 border-t border-slate-200/90 grid grid-cols-1 lg:grid-cols-12 gap-5 sm:gap-6 items-stretch">
           {/* Left Card: What to expect from Jovix */}
-          <div className="lg:col-span-5 p-6 bg-white rounded-2xl border border-slate-200 shadow-sm flex flex-col justify-between">
+          <div className="lg:col-span-5 p-4 sm:p-6 bg-white rounded-2xl border border-slate-200 shadow-sm flex flex-col justify-between">
             <div>
               <div className="flex items-center gap-3 mb-3">
                 <div className="w-10 h-10 rounded-xl bg-blue-50 border border-blue-100 p-1 flex items-center justify-center shrink-0 shadow-2xs">
@@ -343,18 +343,18 @@ export default function Contact() {
                   What to expect from Jovix
                 </h4>
               </div>
-              <p className="text-sm text-slate-600 leading-relaxed">
+              <p className="text-xs sm:text-sm text-slate-600 leading-relaxed">
                 No pushy sales calls. You will speak directly with a lead designer and engineer who will offer tangible feedback on your site.
               </p>
             </div>
-            <div className="mt-5 pt-4 border-t border-slate-100 flex items-center gap-2 text-xs font-semibold text-blue-600">
+            <div className="mt-4 sm:mt-5 pt-3 sm:pt-4 border-t border-slate-100 flex items-center gap-2 text-xs font-semibold text-blue-600">
               <span className="w-2 h-2 rounded-full bg-blue-600 animate-pulse" />
               <span>Direct engineer & designer communication guaranteed</span>
             </div>
           </div>
 
           {/* Right Card: Prefer direct email? (Jyoti & Jay in one horizontal line) */}
-          <div className="lg:col-span-7 p-6 bg-white rounded-2xl border border-slate-200 shadow-sm flex flex-col justify-between">
+          <div className="lg:col-span-7 p-4 sm:p-6 bg-white rounded-2xl border border-slate-200 shadow-sm flex flex-col justify-between">
             <div className="mb-4">
               <h4 className="text-sm font-extrabold uppercase tracking-wide text-slate-900 mb-1">
                 Prefer direct email?

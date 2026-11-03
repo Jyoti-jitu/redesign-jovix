@@ -212,12 +212,12 @@ export const featuredWorkConfig = {
       href: "https://dr-sandeep-panigrahi.jspbp2005.workers.dev/",
     },
     {
-      id: "the-smile-studio",
-      title: "The Smile Studio Dental Clinic",
-      description: "Dental clinic & cosmetic dentistry patient portal in Kalinga Vihar.",
-      image: "/images/portfolio-smile-studio.jpg",
-      imageAlt: "The Smile Studio dental clinic and patient appointment booking portal in Bhubaneswar",
-      href: "https://the-smile-studio-zeta.vercel.app",
+      id: "satyabhama-healthcare",
+      title: "SatyaBhama Healthcare",
+      description: "Multispecialty clinic & doctor consultation schedules in Bhadrak.",
+      image: "/images/portfolio-satyabhama-healthcare.jpg",
+      imageAlt: "Satyabhama Health Care multispecialty clinic and doctor consultation portal in Bhadrak",
+      href: "https://satyabhamahealthcare.in/",
     },
     {
       id: "dr-abhishek-anand",

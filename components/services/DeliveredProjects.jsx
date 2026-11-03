@@ -1,6 +1,7 @@
 "use client";
 
 import React, { useState, useMemo, useEffect } from "react";
+import { createPortal } from "react-dom";
 import Image from "next/image";
 import {
   TrendingUp,
@@ -56,6 +57,11 @@ export default function DeliveredProjects() {
   const [searchQuery, setSearchQuery] = useState("");
   const [expandedProjectId, setExpandedProjectId] = useState(null);
   const [activeModalProject, setActiveModalProject] = useState(null);
+  const [mounted, setMounted] = useState(false);
+
+  useEffect(() => {
+    setMounted(true);
+  }, []);
 
   // Lock body scroll when modal is open
   useEffect(() => {
@@ -396,10 +402,10 @@ export default function DeliveredProjects() {
           </div>
         )}
 
-        {/* Modal: Full Delivered Project Details when card is clicked */}
-        {activeModalProject && (
+        {/* Modal: Full Delivered Project Details when card is clicked (Portaled to body to prevent transform glitches) */}
+        {mounted && typeof document !== "undefined" && activeModalProject && createPortal(
           <div
-            className="fixed inset-0 z-50 bg-slate-950/60 backdrop-blur-xs flex items-center justify-center p-3 sm:p-6 animate-in fade-in duration-200"
+            className="fixed inset-0 z-[9999] bg-slate-950/75 backdrop-blur-sm flex items-center justify-center p-3 sm:p-6 animate-in fade-in duration-200"
             onClick={() => setActiveModalProject(null)}
             role="dialog"
             aria-modal="true"
@@ -537,7 +543,8 @@ export default function DeliveredProjects() {
                 </button>
               </div>
             </div>
-          </div>
+          </div>,
+          document.body
         )}
 
         {/* Bottom Callout Banner */}

@@ -1,6 +1,7 @@
 "use client";
 
 import React, { useState, useMemo, useEffect } from "react";
+import { createPortal } from "react-dom";
 import Image from "next/image";
 import {
   Search,
@@ -41,6 +42,11 @@ export default function AnnouncementsFeed() {
   const [searchQuery, setSearchQuery] = useState("");
   const [selectedAnnouncement, setSelectedAnnouncement] = useState(null);
   const [copiedId, setCopiedId] = useState(null);
+  const [mounted, setMounted] = useState(false);
+
+  useEffect(() => {
+    setMounted(true);
+  }, []);
 
   // Lock body scroll when modal is open
   useEffect(() => {
@@ -293,12 +299,12 @@ export default function AnnouncementsFeed() {
         </div>
       )}
 
-      {/* Interactive Detail Modal / Drawer */}
-      {selectedAnnouncement && (
+      {/* Interactive Detail Modal / Drawer (Portaled to body to prevent transform glitches) */}
+      {mounted && typeof document !== "undefined" && selectedAnnouncement && createPortal(
         <div
           role="dialog"
           aria-modal="true"
-          className="fixed inset-0 z-50 flex items-center justify-center p-4 sm:p-6 bg-slate-950/70 backdrop-blur-sm animate-fade-in"
+          className="fixed inset-0 z-[9999] flex items-center justify-center p-3 sm:p-6 bg-slate-950/75 backdrop-blur-sm animate-fade-in"
           onClick={() => setSelectedAnnouncement(null)}
         >
           <div
@@ -409,7 +415,8 @@ export default function AnnouncementsFeed() {
               </div>
             </div>
           </div>
-        </div>
+        </div>,
+        document.body
       )}
     </section>
   );

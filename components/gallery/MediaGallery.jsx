@@ -1,6 +1,7 @@
 "use client";
 
 import React, { useState, useMemo, useEffect } from "react";
+import { createPortal } from "react-dom";
 import Image from "next/image";
 import {
   Search,
@@ -54,6 +55,11 @@ export default function MediaGallery() {
   const [activeCategory, setActiveCategory] = useState("all");
   const [searchQuery, setSearchQuery] = useState("");
   const [activeLightboxIndex, setActiveLightboxIndex] = useState(null);
+  const [mounted, setMounted] = useState(false);
+
+  useEffect(() => {
+    setMounted(true);
+  }, []);
 
   // Filter gallery items
   const filteredGallery = useMemo(() => {
@@ -263,12 +269,12 @@ export default function MediaGallery() {
         </div>
       )}
 
-      {/* Lightbox Modal */}
-      {currentItem && (
+      {/* Lightbox Modal (Portaled to body to prevent transform glitches) */}
+      {mounted && typeof document !== "undefined" && currentItem && createPortal(
         <div
           role="dialog"
           aria-modal="true"
-          className="fixed inset-0 z-50 flex items-center justify-center p-3 sm:p-6 bg-slate-950/90 backdrop-blur-md animate-fade-in"
+          className="fixed inset-0 z-[9999] flex items-center justify-center p-3 sm:p-6 bg-slate-950/90 backdrop-blur-md animate-fade-in"
           onClick={() => setActiveLightboxIndex(null)}
         >
           {/* Close Button */}
@@ -370,7 +376,8 @@ export default function MediaGallery() {
               </div>
             </div>
           </div>
-        </div>
+        </div>,
+        document.body
       )}
     </section>
   );

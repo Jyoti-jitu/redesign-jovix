@@ -160,12 +160,20 @@ export default function Footer() {
               >
                 hello@jovix.co.uk
               </a>
-              <a
-                href="tel:+919090598756"
-                className="block text-slate-300 hover:text-white font-medium transition-colors"
-              >
-                +91 90905 98756
-              </a>
+              <div className="space-y-1 pt-0.5">
+                <a
+                  href="tel:+919090598756"
+                  className="block text-slate-300 hover:text-white font-medium transition-colors"
+                >
+                  +91 90905 98756
+                </a>
+                <a
+                  href="tel:+917846803792"
+                  className="block text-slate-300 hover:text-white font-medium transition-colors"
+                >
+                  +91 78468 03792
+                </a>
+              </div>
             </div>
           </div>
         </div>

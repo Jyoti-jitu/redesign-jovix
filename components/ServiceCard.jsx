@@ -1,6 +1,7 @@
 "use client";
 
 import React, { useState, useEffect } from "react";
+import { createPortal } from "react-dom";
 import Image from "next/image";
 import {
   Monitor,
@@ -24,7 +25,7 @@ const ICON_MAP = {
 /**
  * Individual Service Card Component
  * Decreased size on mobile (2x2 grid friendly), simple details in UI,
- * with full details modal on click so user can see all necessary details.
+ * with full details modal on click (portaled to body) so user can see all necessary details glitch-free.
  */
 function getShortServiceName(title) {
   if (!title) return "";
@@ -39,10 +40,16 @@ export default function ServiceCard({ service }) {
   const { title, description, image, imageAlt, icon, link } = service;
   const IconComponent = ICON_MAP[icon] || Monitor;
   const [isModalOpen, setIsModalOpen] = useState(false);
+  const [mounted, setMounted] = useState(false);
+
+  useEffect(() => {
+    setMounted(true);
+  }, []);
 
   // Lock body scroll when modal is open
   useEffect(() => {
     if (isModalOpen) {
+      const prevOverflow = document.body.style.overflow;
       document.body.style.overflow = "hidden";
       const handleKeyDown = (e) => {
         if (e.key === "Escape") {
@@ -51,21 +58,88 @@ export default function ServiceCard({ service }) {
       };
       window.addEventListener("keydown", handleKeyDown);
       return () => {
-        document.body.style.overflow = "";
+        document.body.style.overflow = prevOverflow;
         window.removeEventListener("keydown", handleKeyDown);
       };
-    } else {
-      document.body.style.overflow = "";
     }
   }, [isModalOpen]);
 
   const handleCardClick = (e) => {
-    // On small screens, open the modal to display all necessary details
-    if (window.innerWidth < 640) {
+    // On small screens (< 640px), open the modal to display all necessary details
+    if (typeof window !== "undefined" && window.innerWidth < 640) {
       e.preventDefault();
+      e.stopPropagation();
       setIsModalOpen(true);
     }
   };
+
+  const modalContent = isModalOpen ? (
+    <div
+      className="fixed inset-0 z-[9999] bg-slate-950/75 backdrop-blur-sm flex items-center justify-center p-3 sm:p-4 animate-in fade-in duration-200"
+      onClick={() => setIsModalOpen(false)}
+      role="dialog"
+      aria-modal="true"
+    >
+      <div
+        className="relative w-full max-w-sm sm:max-w-md max-h-[90vh] overflow-y-auto overscroll-contain bg-white rounded-2xl sm:rounded-3xl shadow-2xl border border-slate-200 p-4 sm:p-6 text-left"
+        onClick={(e) => e.stopPropagation()}
+      >
+        {/* Close Button */}
+        <button
+          type="button"
+          onClick={() => setIsModalOpen(false)}
+          aria-label="Close dialog"
+          className="absolute top-3 right-3 sm:top-4 sm:right-4 w-9 h-9 rounded-full bg-slate-100 hover:bg-slate-200 active:scale-95 text-slate-700 flex items-center justify-center transition-all z-20 cursor-pointer shadow-xs"
+        >
+          <X className="w-4 h-4 stroke-[2.5]" />
+        </button>
+
+        {/* Modal Image */}
+        <div className="relative w-full aspect-[16/10] rounded-xl overflow-hidden bg-slate-100 mb-4 shadow-inner">
+          <Image
+            src={image}
+            alt={imageAlt}
+            fill
+            sizes="(max-width: 640px) 90vw, 420px"
+            className="object-cover"
+          />
+          <div className="absolute top-2.5 left-2.5 w-8 h-8 rounded-lg bg-white/95 backdrop-blur-md shadow-xs flex items-center justify-center text-blue-600 border border-slate-200/80">
+            <IconComponent className="w-4 h-4 stroke-[2]" />
+          </div>
+        </div>
+
+        {/* Title */}
+        <h3 className="text-base sm:text-lg font-black text-slate-950 tracking-tight mb-2 pr-8">
+          {title}
+        </h3>
+
+        {/* Full Description */}
+        <p className="text-xs sm:text-sm text-slate-600 leading-relaxed font-normal mb-5">
+          {description}
+        </p>
+
+        {/* Action Buttons */}
+        <div className="flex items-center gap-2 pt-3 border-t border-slate-100">
+          <a
+            href={link.href}
+            onClick={() => setIsModalOpen(false)}
+            className="flex-1 inline-flex items-center justify-center gap-1.5 px-4 py-2.5 rounded-xl bg-blue-600 hover:bg-blue-700 active:bg-blue-800 text-white text-xs sm:text-sm font-bold shadow-xs transition-all text-center min-h-[44px]"
+          >
+            <span>{link.label}</span>
+            <ArrowRight className="w-3.5 h-3.5" />
+          </a>
+
+          <a
+            href="/services"
+            onClick={() => setIsModalOpen(false)}
+            className="inline-flex items-center justify-center px-4 py-2.5 rounded-xl border border-slate-200 hover:bg-slate-50 active:bg-slate-100 text-slate-700 text-xs sm:text-sm font-bold transition-all text-center min-h-[44px]"
+          >
+            <span>All Services</span>
+          </a>
+        </div>
+      </div>
+    </div>
+  ) : null;
 
   return (
     <>
@@ -121,73 +195,8 @@ export default function ServiceCard({ service }) {
         </div>
       </div>
 
-      {/* Details Modal on Mobile */}
-      {isModalOpen && (
-        <div
-          className="fixed inset-0 z-50 bg-slate-950/60 backdrop-blur-xs flex items-center justify-center p-4 animate-in fade-in duration-200"
-          onClick={() => setIsModalOpen(false)}
-          role="dialog"
-          aria-modal="true"
-        >
-          <div
-            className="relative w-full max-w-sm bg-white rounded-2xl shadow-2xl border border-slate-200 p-5 text-left"
-            onClick={(e) => e.stopPropagation()}
-          >
-            {/* Close Button */}
-            <button
-              type="button"
-              onClick={() => setIsModalOpen(false)}
-              aria-label="Close dialog"
-              className="absolute top-3.5 right-3.5 w-8 h-8 rounded-full bg-slate-100 hover:bg-slate-200 text-slate-600 flex items-center justify-center transition-colors cursor-pointer"
-            >
-              <X className="w-4 h-4 stroke-[2.5]" />
-            </button>
-
-            {/* Modal Image */}
-            <div className="relative w-full aspect-[16/10] rounded-xl overflow-hidden bg-slate-100 mb-4">
-              <Image
-                src={image}
-                alt={imageAlt}
-                fill
-                className="object-cover"
-              />
-              <div className="absolute top-2.5 left-2.5 w-8 h-8 rounded-lg bg-white/95 backdrop-blur-md shadow-xs flex items-center justify-center text-blue-600">
-                <IconComponent className="w-4 h-4 stroke-[2]" />
-              </div>
-            </div>
-
-            {/* Title */}
-            <h3 className="text-base font-extrabold text-slate-950 tracking-tight mb-2">
-              {title}
-            </h3>
-
-            {/* Full Description */}
-            <p className="text-xs text-slate-600 leading-relaxed font-normal mb-5">
-              {description}
-            </p>
-
-            {/* Action Buttons */}
-            <div className="flex items-center gap-2 pt-2 border-t border-slate-100">
-              <a
-                href={link.href}
-                onClick={() => setIsModalOpen(false)}
-                className="flex-1 inline-flex items-center justify-center gap-1.5 px-4 py-2.5 rounded-xl bg-blue-600 hover:bg-blue-700 text-white text-xs font-bold shadow-xs transition-all text-center"
-              >
-                <span>{link.label}</span>
-                <ArrowRight className="w-3.5 h-3.5" />
-              </a>
-
-              <a
-                href="/services"
-                onClick={() => setIsModalOpen(false)}
-                className="inline-flex items-center justify-center px-3.5 py-2.5 rounded-xl border border-slate-200 hover:bg-slate-50 text-slate-700 text-xs font-bold transition-all text-center"
-              >
-                <span>All Services</span>
-              </a>
-            </div>
-          </div>
-        </div>
-      )}
+      {/* Details Modal on Mobile - Portaled to document.body to prevent transform/clipping glitches */}
+      {mounted && typeof document !== "undefined" && modalContent && createPortal(modalContent, document.body)}
     </>
   );
 }

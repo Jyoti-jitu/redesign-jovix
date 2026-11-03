@@ -1,13 +1,14 @@
 "use client";
 
 import React, { useState, useEffect } from "react";
+import { createPortal } from "react-dom";
 import Image from "next/image";
 import { ArrowRight, ExternalLink, X, Crown } from "lucide-react";
 
 /**
  * ProjectCard Component
  * Decreased size on mobile (2x2 grid friendly), simple details in UI,
- * with full details modal on click so user can see all necessary details.
+ * with full details modal on click (portaled to body) so user can see all necessary details glitch-free.
  */
 function getProjectName(title) {
   if (!title) return "";
@@ -51,10 +52,16 @@ export default function ProjectCard({ project }) {
     project.imagePosition ||
     (project.id === "dr-abhishek-anand" ? "center 18%" : undefined);
   const [isModalOpen, setIsModalOpen] = useState(false);
+  const [mounted, setMounted] = useState(false);
+
+  useEffect(() => {
+    setMounted(true);
+  }, []);
 
   // Lock body scroll when modal is open
   useEffect(() => {
     if (isModalOpen) {
+      const prevOverflow = document.body.style.overflow;
       document.body.style.overflow = "hidden";
       const handleKeyDown = (e) => {
         if (e.key === "Escape") {
@@ -63,20 +70,104 @@ export default function ProjectCard({ project }) {
       };
       window.addEventListener("keydown", handleKeyDown);
       return () => {
-        document.body.style.overflow = "";
+        document.body.style.overflow = prevOverflow;
         window.removeEventListener("keydown", handleKeyDown);
       };
-    } else {
-      document.body.style.overflow = "";
     }
   }, [isModalOpen]);
 
   const handleCardClick = (e) => {
-    if (window.innerWidth < 640) {
+    if (typeof window !== "undefined" && window.innerWidth < 640) {
       e.preventDefault();
+      e.stopPropagation();
       setIsModalOpen(true);
     }
   };
+
+  const modalContent = isModalOpen ? (
+    <div
+      className="fixed inset-0 z-[9999] bg-slate-950/75 backdrop-blur-sm flex items-center justify-center p-3 sm:p-4 animate-in fade-in duration-200"
+      onClick={() => setIsModalOpen(false)}
+      role="dialog"
+      aria-modal="true"
+    >
+      <div
+        className="relative w-full max-w-sm sm:max-w-md max-h-[90vh] overflow-y-auto overscroll-contain bg-white rounded-2xl sm:rounded-3xl shadow-2xl border border-slate-200 p-4 sm:p-6 text-left"
+        onClick={(e) => e.stopPropagation()}
+      >
+        {/* Close Button */}
+        <button
+          type="button"
+          onClick={() => setIsModalOpen(false)}
+          aria-label="Close dialog"
+          className="absolute top-3 right-3 sm:top-4 sm:right-4 w-9 h-9 rounded-full bg-slate-100 hover:bg-slate-200 active:scale-95 text-slate-700 flex items-center justify-center transition-all z-20 cursor-pointer shadow-xs"
+        >
+          <X className="w-4 h-4 stroke-[2.5]" />
+        </button>
+
+        {/* Modal Image */}
+        <div className="relative w-full aspect-[16/10] rounded-xl overflow-hidden bg-slate-100 mb-4 shadow-inner">
+          <Image
+            src={image}
+            alt={imageAlt}
+            fill
+            sizes="(max-width: 640px) 90vw, 420px"
+            style={imagePosition ? { objectPosition: imagePosition } : undefined}
+            className="object-cover"
+          />
+          {hasCrown && (
+            <div className="absolute top-2.5 left-2.5 z-10 inline-flex items-center gap-1 px-2.5 py-1 rounded-full bg-gradient-to-r from-amber-500 to-amber-600 text-white shadow-md border border-amber-300/40">
+              <Crown className="w-3.5 h-3.5 fill-amber-100 text-white stroke-[2]" />
+              <span className="text-[10px] font-black uppercase tracking-wider text-amber-50">
+                Top Pick
+              </span>
+            </div>
+          )}
+        </div>
+
+        {/* Title */}
+        <h3 className="text-base sm:text-lg font-black text-slate-950 tracking-tight mb-2 pr-8 flex items-center gap-1.5">
+          {hasCrown && (
+            <Crown className="w-4 h-4 text-amber-500 fill-amber-400 shrink-0" />
+          )}
+          <span>{title}</span>
+        </h3>
+
+        {/* Full Description */}
+        {description && (
+          <p className="text-xs sm:text-sm text-slate-600 leading-relaxed font-normal mb-5">
+            {description}
+          </p>
+        )}
+
+        {/* Action Buttons */}
+        <div className="flex items-center gap-2 pt-3 border-t border-slate-100">
+          <a
+            href={href || "#contact"}
+            target={isExternal ? "_blank" : undefined}
+            rel={isExternal ? "noopener noreferrer" : undefined}
+            onClick={() => setIsModalOpen(false)}
+            className="flex-1 inline-flex items-center justify-center gap-1.5 px-4 py-2.5 rounded-xl bg-blue-600 hover:bg-blue-700 active:bg-blue-800 text-white text-xs sm:text-sm font-bold shadow-xs transition-all text-center min-h-[44px]"
+          >
+            <span>{isExternal ? "Visit Project" : "View Case Study"}</span>
+            {isExternal ? (
+              <ExternalLink className="w-3.5 h-3.5" />
+            ) : (
+              <ArrowRight className="w-3.5 h-3.5" />
+            )}
+          </a>
+
+          <a
+            href="/services#delivered-projects"
+            onClick={() => setIsModalOpen(false)}
+            className="inline-flex items-center justify-center px-4 py-2.5 rounded-xl border border-slate-200 hover:bg-slate-50 active:bg-slate-100 text-slate-700 text-xs sm:text-sm font-bold transition-all text-center min-h-[44px]"
+          >
+            <span>All Projects</span>
+          </a>
+        </div>
+      </div>
+    </div>
+  ) : null;
 
   return (
     <>
@@ -102,7 +193,7 @@ export default function ProjectCard({ project }) {
           {/* Crown Badge */}
           {hasCrown && (
             <div className="absolute top-2 left-2 sm:top-3 sm:left-3 z-10 inline-flex items-center gap-1 sm:gap-1.5 px-2 py-0.5 sm:px-2.5 sm:py-1 rounded-full bg-gradient-to-r from-amber-500 to-amber-600 text-white shadow-md border border-amber-300/40 backdrop-blur-xs">
-              <Crown className="w-3 h-3 sm:w-3.5 sm:h-3.5 fill-amber-100 text-white stroke-[2]" />
+              <Crown className="w-3.5 h-3.5 fill-amber-100 text-white stroke-[2]" />
               <span className="text-[9px] sm:text-[10px] font-black uppercase tracking-wider text-amber-50">
                 Top Pick
               </span>
@@ -111,7 +202,7 @@ export default function ProjectCard({ project }) {
 
           {isExternal && (
             <div className="absolute top-2 right-2 sm:top-3 sm:right-3 z-10 w-6 h-6 sm:w-8 sm:h-8 rounded-full bg-white/90 backdrop-blur-md flex items-center justify-center text-slate-700 shadow-xs group-hover:bg-blue-600 group-hover:text-white transition-colors">
-              <ExternalLink className="w-3 h-3 sm:w-3.5 sm:h-3.5" />
+              <ExternalLink className="w-3.5 h-3.5" />
             </div>
           )}
         </div>
@@ -141,90 +232,8 @@ export default function ProjectCard({ project }) {
         </div>
       </a>
 
-      {/* Details Modal on Mobile */}
-      {isModalOpen && (
-        <div
-          className="fixed inset-0 z-50 bg-slate-950/60 backdrop-blur-xs flex items-center justify-center p-4 animate-in fade-in duration-200"
-          onClick={() => setIsModalOpen(false)}
-          role="dialog"
-          aria-modal="true"
-        >
-          <div
-            className="relative w-full max-w-sm bg-white rounded-2xl shadow-2xl border border-slate-200 p-5 text-left"
-            onClick={(e) => e.stopPropagation()}
-          >
-            {/* Close Button */}
-            <button
-              type="button"
-              onClick={() => setIsModalOpen(false)}
-              aria-label="Close dialog"
-              className="absolute top-3.5 right-3.5 w-8 h-8 rounded-full bg-slate-100 hover:bg-slate-200 text-slate-600 flex items-center justify-center transition-colors cursor-pointer"
-            >
-              <X className="w-4 h-4 stroke-[2.5]" />
-            </button>
-
-            {/* Modal Image */}
-            <div className="relative w-full aspect-[16/10] rounded-xl overflow-hidden bg-slate-100 mb-4">
-              <Image
-                src={image}
-                alt={imageAlt}
-                fill
-                style={imagePosition ? { objectPosition: imagePosition } : undefined}
-                className="object-cover"
-              />
-              {hasCrown && (
-                <div className="absolute top-2.5 left-2.5 z-10 inline-flex items-center gap-1 px-2.5 py-1 rounded-full bg-gradient-to-r from-amber-500 to-amber-600 text-white shadow-md border border-amber-300/40">
-                  <Crown className="w-3.5 h-3.5 fill-amber-100 text-white stroke-[2]" />
-                  <span className="text-[10px] font-black uppercase tracking-wider text-amber-50">
-                    Top Pick
-                  </span>
-                </div>
-              )}
-            </div>
-
-            {/* Title */}
-            <h3 className="text-base font-extrabold text-slate-950 tracking-tight mb-2 flex items-center gap-1.5">
-              {hasCrown && (
-                <Crown className="w-4 h-4 text-amber-500 fill-amber-400 shrink-0" />
-              )}
-              <span>{title}</span>
-            </h3>
-
-            {/* Full Description */}
-            {description && (
-              <p className="text-xs text-slate-600 leading-relaxed font-normal mb-5">
-                {description}
-              </p>
-            )}
-
-            {/* Action Buttons */}
-            <div className="flex items-center gap-2 pt-2 border-t border-slate-100">
-              <a
-                href={href || "#contact"}
-                target={isExternal ? "_blank" : undefined}
-                rel={isExternal ? "noopener noreferrer" : undefined}
-                onClick={() => setIsModalOpen(false)}
-                className="flex-1 inline-flex items-center justify-center gap-1.5 px-4 py-2.5 rounded-xl bg-blue-600 hover:bg-blue-700 text-white text-xs font-bold shadow-xs transition-all text-center"
-              >
-                <span>{isExternal ? "Visit Project" : "View Case Study"}</span>
-                {isExternal ? (
-                  <ExternalLink className="w-3.5 h-3.5" />
-                ) : (
-                  <ArrowRight className="w-3.5 h-3.5" />
-                )}
-              </a>
-
-              <a
-                href="/services#delivered-projects"
-                onClick={() => setIsModalOpen(false)}
-                className="inline-flex items-center justify-center px-3.5 py-2.5 rounded-xl border border-slate-200 hover:bg-slate-50 text-slate-700 text-xs font-bold transition-all text-center"
-              >
-                <span>All Projects</span>
-              </a>
-            </div>
-          </div>
-        </div>
-      )}
+      {/* Details Modal on Mobile - Portaled to document.body to prevent transform/clipping glitches */}
+      {mounted && typeof document !== "undefined" && modalContent && createPortal(modalContent, document.body)}
     </>
   );
 }

@@ -1,6 +1,7 @@
 "use client";
 
 import React, { useState, useEffect, useRef } from "react";
+import { createPortal } from "react-dom";
 import Image from "next/image";
 import {
   Monitor,
@@ -34,8 +35,13 @@ function getShortServiceName(title) {
 export default function ServicesList() {
   const [activeServiceModal, setActiveServiceModal] = useState(null);
   const [isCatalogVisible, setIsCatalogVisible] = useState(false);
+  const [mounted, setMounted] = useState(false);
   const cardsGridRef = useRef(null);
   const hasAnimatedRef = useRef(false);
+
+  useEffect(() => {
+    setMounted(true);
+  }, []);
 
   useEffect(() => {
     const el = cardsGridRef.current;
@@ -242,16 +248,16 @@ export default function ServicesList() {
           })}
         </div>
 
-        {/* Modal: Full Service Details when card is clicked */}
-        {activeServiceModal && (
+        {/* Modal: Full Service Details when card is clicked (Portaled to body to prevent transform glitches) */}
+        {mounted && typeof document !== "undefined" && activeServiceModal && createPortal(
           <div
-            className="fixed inset-0 z-50 bg-slate-950/60 backdrop-blur-xs flex items-center justify-center p-3 sm:p-6 animate-in fade-in duration-200"
+            className="fixed inset-0 z-[9999] bg-slate-950/75 backdrop-blur-sm flex items-center justify-center p-3 sm:p-6 animate-in fade-in duration-200"
             onClick={() => setActiveServiceModal(null)}
             role="dialog"
             aria-modal="true"
           >
             <div
-              className="relative w-full max-w-lg max-h-[88vh] overflow-y-auto bg-white rounded-2xl sm:rounded-3xl shadow-2xl border border-slate-200 p-4 sm:p-6 text-left"
+              className="relative w-full max-w-lg max-h-[88vh] overflow-y-auto overscroll-contain bg-white rounded-2xl sm:rounded-3xl shadow-2xl border border-slate-200 p-4 sm:p-6 text-left"
               onClick={(e) => e.stopPropagation()}
             >
               {/* Close Button */}
@@ -259,7 +265,7 @@ export default function ServicesList() {
                 type="button"
                 onClick={() => setActiveServiceModal(null)}
                 aria-label="Close dialog"
-                className="absolute top-3 right-3 sm:top-4 sm:right-4 w-8 h-8 rounded-full bg-slate-100 hover:bg-slate-200 text-slate-600 hover:text-slate-900 flex items-center justify-center transition-colors z-20 cursor-pointer"
+                className="absolute top-3 right-3 sm:top-4 sm:right-4 w-9 h-9 rounded-full bg-slate-100 hover:bg-slate-200 active:scale-95 text-slate-700 flex items-center justify-center transition-all z-20 cursor-pointer shadow-xs"
               >
                 <X className="w-4 h-4 stroke-[2.5]" />
               </button>
@@ -340,7 +346,7 @@ export default function ServicesList() {
                 <button
                   type="button"
                   onClick={(e) => scrollToContact(e, activeServiceModal.title)}
-                  className="flex-1 inline-flex items-center justify-center gap-1.5 px-4 py-2.5 rounded-xl bg-blue-600 hover:bg-blue-700 text-white text-xs sm:text-sm font-bold shadow-xs transition-all cursor-pointer text-center"
+                  className="flex-1 inline-flex items-center justify-center gap-1.5 px-4 py-2.5 rounded-xl bg-blue-600 hover:bg-blue-700 text-white text-xs sm:text-sm font-bold shadow-xs transition-all cursor-pointer text-center min-h-[44px]"
                 >
                   <span>Inquire for this Service</span>
                   <ArrowRight className="w-3.5 h-3.5" />
@@ -349,13 +355,14 @@ export default function ServicesList() {
                 <button
                   type="button"
                   onClick={(e) => scrollToDeliveredProject(e, activeServiceModal.featuredDeliveredProject)}
-                  className="inline-flex items-center justify-center gap-1.5 px-4 py-2.5 rounded-xl border border-slate-300 hover:border-slate-400 text-slate-800 text-xs sm:text-sm font-bold transition-all cursor-pointer"
+                  className="inline-flex items-center justify-center gap-1.5 px-4 py-2.5 rounded-xl border border-slate-300 hover:border-slate-400 text-slate-800 text-xs sm:text-sm font-bold transition-all cursor-pointer min-h-[44px]"
                 >
                   <span>View Delivered Work</span>
                 </button>
               </div>
             </div>
-          </div>
+          </div>,
+          document.body
         )}
       </div>
     </section>
