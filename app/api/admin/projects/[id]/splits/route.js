@@ -44,9 +44,21 @@ export async function POST(request, { params }) {
   if (!existing) {
     return NextResponse.json({ error: "Project not found." }, { status: 404 });
   }
-  if (amount > existing.totalPrice) {
+
+  // Calculate remaining balance (totalPrice - sum of existing splits)
+  const splitsTotal = (existing.splits || []).reduce(
+    (sum, split) => sum + split.amount,
+    0
+  );
+  const remaining = existing.totalPrice - splitsTotal;
+
+  if (amount > remaining) {
     return NextResponse.json(
-      { error: "Amount cannot exceed the project total price." },
+      {
+        error: `Amount cannot exceed remaining balance. Remaining: ₹${remaining.toFixed(
+          2
+        )}`,
+      },
       { status: 400 }
     );
   }
